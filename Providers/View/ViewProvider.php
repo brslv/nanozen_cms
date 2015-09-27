@@ -5,6 +5,7 @@ namespace Nanozen\Providers\View;
 use Nanozen\Contracts\Providers\View\ViewProviderContract;
 use Nanozen\App\Injector;
 use Nanozen\Utilities\Util;
+use Nanozen\Utilities\Html\Form;
 
 /**
  * Class ViewProvider
@@ -58,7 +59,10 @@ class ViewProvider implements ViewProviderContract
 		$this->view = $view;
 		$this->data = is_null($data) 
 			? $this->data 
-				: array_merge($data, $this->data, $this->viewCommonDataProviderContract->getCommonData());
+				: array_merge(
+					$data, 
+					$this->data, 
+					$this->viewCommonDataProviderContract->getCommonData());
 		
 		extract($this->escapeData());
 

@@ -45,7 +45,7 @@ Injector::prepare(
 		[
 			'mysql',
 			'localhost',
-			'nanozen_framework',
+			'nanozen_cms',
 			'root',
 			'root',
 		]);
