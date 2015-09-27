@@ -15,5 +15,8 @@ use Nanozen\Utilities\Html\Form;
  */
 class HomeController extends BaseController
 {
-	
+	public function index()
+	{
+		$this->view()->render('home.index');
+	}
 }

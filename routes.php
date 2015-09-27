@@ -5,8 +5,7 @@
  * Give me the first step of the journey, master.
  */
 
-$router->get('/', function () {
-	
-	echo "test";
-	
-});
+$router->get('/', 'HomeController@index');
+
+// Authentication
+$router->get('/register', 'AuthController@register');
