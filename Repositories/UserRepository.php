@@ -64,7 +64,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 		$stmt = $this->db()->prepare($query);
 		$stmt->execute($executableArray);
 		$user = $stmt->fetch(\PDO::FETCH_OBJ, false);
-	
+
 		return UserFactory::make($user);
 	}
 
@@ -115,6 +115,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 			$lastName = $user->getLastName();
 			$email = $user->getEmail();
 			$roleId = $user->getRoleId();
+			$role = $user->getRole();
 			$active = $user->getActive();
 			$bannedOn = $user->getBannedOn();
 			$rememberToken = $user->getRememberToken();
@@ -124,6 +125,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 			Session::put('lastName', $lastName);
 			Session::put('email', $email);
 			Session::put('roleId', $roleId);
+			Session::put('role', $role);
 			Session::put('active', $active);
 			Session::put('bannedOn', $bannedOn);
 			Session::put('rememberToken', $rememberToken);

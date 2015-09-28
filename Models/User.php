@@ -25,6 +25,8 @@ class User
 
 	private $roleId;
 
+    private $role;
+
 	private $bannedOn;
 
     private $rememberToken;
@@ -141,4 +143,42 @@ class User
         return $this->rememberToken;
     }
     
+
+    /**
+     * Gets the value of role.
+     *
+     * @return mixed
+     */
+    public function getRole()
+    {
+        if (is_null($this->role)) {
+            switch ($this->roleId) {
+                case 1:
+                    $this->role = 'editor';
+                    break;
+                case 2:
+                    $this->role = 'user';
+                    break;
+                case 3:
+                    return $this->role = 'admin';
+                    break;
+            }
+        }
+
+        return $this->role;
+    }
+
+    /**
+     * Sets the value of role.
+     *
+     * @param mixed $role the role
+     *
+     * @return self
+     */
+    private function _setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
 }

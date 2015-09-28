@@ -23,12 +23,12 @@ class UserFactory
 		$username = $info->username;
 		$password = $info->password;
 		$email = $info->email;
-		$firstName = isset($info->firstName) ? $info->firstName : null;
-		$lastName = isset($info->lastName) ? $info->lastName : null;
-		$roleId = isset($info->roleId) ? $info->roleId : static::DEFAULT_USER_ROLE;
+		$firstName = isset($info->first_name) ? $info->first_name : null;
+		$lastName = isset($info->last_name) ? $info->last_name : null;
+		$roleId = isset($info->role_id) ? $info->role_id : static::DEFAULT_USER_ROLE;
 		$active = isset($info->active) ? $info->active : static::DEFAULT_USER_ACTIVE;
 		$bannedOn = null;
-		$rememberToken = isset($info->rememberToken) ? $info->rememberToken : null;
+		$rememberToken = isset($info->remember_token) ? $info->remember_token : null;
 
 		return new User($username, $password, $email, $roleId, $active, $firstName, $lastName, $bannedOn, $rememberToken);
 	}

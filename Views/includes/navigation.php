@@ -23,6 +23,7 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					<?php if (Session::has('username')) : ?>
+						<li><a href="/back">Control panel</a></li>
 						<li><a href="/logout">Logout</a></li>
 					<?php else: ?>
 						<li><a href="/register">Register</a></li>

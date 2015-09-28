@@ -4,6 +4,7 @@ namespace Nanozen\Controllers;
 
 use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
 use Nanozen\Providers\Redirect\RedirectProvider as Redirect;
+use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\App\Injector;
 
 /**

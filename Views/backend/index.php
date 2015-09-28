@@ -4,69 +4,13 @@
 ?>
 <?php include app_header(); ?>
 <?php include app_navigation(); ?>
-	
-	<nav class="container">
-		<ul class="nav nav-pills navbar-right">
-			<li role="presentation" class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-					Pages <span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu">
-					<li><a href="">About</a></li>
-					<li><a href="">Projects</a></li>
-					<li><a href="">Contacts</a></li>
-				</ul>
-			</li>
-
-			<li role="presentation" class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-					Blocks <span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu">
-					<li><a href="">Add block</a></li>
-					<li><a href="">Manage blocks</a></li>
-				</ul>
-			</li>
-
-			<li role="presentation" class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-					Users <span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu">
-					<li><a href="">Manage users</a></li>
-					<li><a href="">Manage editors</a></li>
-				</ul>
-			</li>
-
-			<li role="presentation" class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-					Settings <span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu">
-					<li><a href="">Site title</a></li>
-					<li><a href="">Site description</a></li>
-				</ul>
-			</li>
-
-			<li role="presentation" class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-					Profile <span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu">
-					<li><a href="">Edit</a></li>
-					<li><a href="">Change password</a></li>
-					<li><a href="">Change email</a></li>
-				</ul>
-			</li>
-		</ul>
-	</nav>
-
-	<hr />
+<?php include app_back_navigation(); ?>
 
 	<main class="app-main">
 		<div class="container">
 
-			<h2>Welcome, <?= Session::get('username'); ?>.</h2>
+			<h1 class="welcome-message">Welcome, <strong><?= Session::get('username'); ?></strong>.</h1>
+			<h5 class="role-info">Your role is: <strong><?= Session::get('role'); ?></strong></h5>
 
 			<hr />
 
@@ -79,7 +23,14 @@
 							<h3 class="panel-title">Notes</h3>
 						</div>
 						<div class="panel-body">
-							Here you can jot down stuff you need to remember.
+							Here you can jot down stuff you need to remember. 
+
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua.
+
+							<div style="padding-top: 20px;">
+							<a href="" class="btn btn-sm btn-default">Edit</a>
+							</div>
 						</div>
 					</div>
 				</div>

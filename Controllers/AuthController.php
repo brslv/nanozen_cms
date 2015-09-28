@@ -30,6 +30,8 @@ class AuthController extends BaseController
 	 */
 	public function register()
 	{
+		Redirect::loggedUser('/back');
+
 		$this->view()->render('auth.register');
 	}
 
@@ -43,8 +45,7 @@ class AuthController extends BaseController
 		$registeredUser = $this->userRepository->save($bindedUser);
 
 		if ($registeredUser) {
-			// return $registeredUser;
-			$this->view()->render('auth.test', ['loggedUserUsername' => $registeredUser->getUsername()]);
+			Redirect::to('/login');
 		} else {
 			Redirect::to('/register');
 		}
@@ -52,6 +53,8 @@ class AuthController extends BaseController
 
 	public function login()
 	{
+		Redirect::loggedUser('/back');
+
 		$this->view()->render('auth.login');
 	}
 
