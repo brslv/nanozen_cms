@@ -5,6 +5,7 @@ namespace Nanozen\Controllers;
 use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
 use Nanozen\App\Injector;
 use Nanozen\Providers\Session\SessionProvider as Session;
+use Nanozen\Providers\Redirect\RedirectProvider as Redirect;
 
 /**
  * Class AuthController
@@ -65,7 +66,7 @@ class AuthController extends BaseController
 	public function logout()
 	{
 		if ($this->userRepository->logout()) {
-			header('Location: /'); // TODO: make redirect object
+			Redirect::guests('/');
 		}
 	}
 	

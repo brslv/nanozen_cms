@@ -143,7 +143,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 	 */
 	public function logout()
 	{
-		if (Session::has('username')) {
+		if ($this->hasLogged()) {
 			Session::remove('username');	
 			Session::remove('firstName');
 			Session::remove('lastName');
@@ -164,7 +164,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
      * 
      * @return boolean [description]
      */
-    public function isLogged()
+    public function hasLogged()
     {
         return Session::has('username');
     }
