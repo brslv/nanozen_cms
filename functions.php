@@ -31,3 +31,13 @@ if ( ! function_exists('app_navigation')) {
 		include_once VIEWS_INCLUDE_FOLDER . 'navigation.php';
 	}
 }
+
+if ( ! function_exists('app_flash')) {
+
+	/**
+	 * Includes the flash messaging view engine of the app.
+	 */
+	function app_flash() {
+		include_once VIEWS_INCLUDE_FOLDER . 'flash.php';
+	}
+}

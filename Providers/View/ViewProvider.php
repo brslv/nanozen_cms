@@ -95,7 +95,7 @@ class ViewProvider implements ViewProviderContract
 	private function escapeData()
 	{
 		if ($this->escapeHtmlChars) {
-			Util::e($this->data);
+			$this->data = Util::e($this->data);
 		}
 		
 		return $this->data;

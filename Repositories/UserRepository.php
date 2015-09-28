@@ -4,12 +4,14 @@ namespace Nanozen\Repositories;
 
 use Nanozen\Models\User;
 use Nanozen\Utilities\Hash;
+use Nanozen\Utilities\Validator;
 use Nanozen\Factories\UserFactory;
+use Nanozen\Utilities\Communicator;
 use Nanozen\Models\Binding\LoginUserBinding;
-use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Models\Binding\RegisterUserBinding;
+use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Contracts\Repositories\UserRepositoryContract;
-use Nanozen\Providers\Error\ErrorProvider as Error;
+use Nanozen\Providers\Redidect\RedirectProvider as Redirect;
 
 /**
 * Class UserRepository
@@ -27,11 +29,10 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 	 */
 	public function save(RegisterUserBinding $user)
 	{
+		if ( ! Validator::validateRegistrationInformation($user)) return;
+
 		$query = "INSERT INTO users(username, password, email, role_id) VALUES(:username, :password, :email, :role_id)";
 		$stmt = $this->db()->prepare($query);
-
-		// TODO: validate the information of $user.
-
 		$stmt->execute([
 			':username' => $user->username,
 			':password' => Hash::password($user->password),
@@ -132,7 +133,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 
 		// TODO: implement error messages.
 
-		Session::flash('flash_messages', 'Invalid credentials. Please try again.');
+		Session::flash('flash_messages', Communicator::INVALID_CREDENTIALS);
 		return false;
 	}
 

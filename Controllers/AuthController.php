@@ -42,7 +42,12 @@ class AuthController extends BaseController
 		$bindedUser = $this->binding;
 		$registeredUser = $this->userRepository->save($bindedUser);
 
-		return $registeredUser;
+		if ($registeredUser) {
+			// return $registeredUser;
+			$this->view()->render('auth.test', ['loggedUserUsername' => $registeredUser->getUsername()]);
+		} else {
+			Redirect::to('/register');
+		}
 	}
 
 	public function login()

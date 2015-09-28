@@ -1,7 +1,4 @@
-<?php 
-	use \Nanozen\Utilities\Html\Form; 
-	use \Nanozen\Providers\Session\SessionProvider as Session;
-?>
+<?php use \Nanozen\Utilities\Html\Form; ?>
 <?php app_header() ?>
 <?php app_navigation(); ?>
 
@@ -10,13 +7,7 @@
 
 			<h2>Login</h2>
 
-			<?php if (Session::flash()) : ?>
-				<?php foreach(Session::flash('flash_messages') as $flash) : ?>
-					<div class="alert alert-warning">
-						<?= $flash; ?>
-					</div>
-				<?php endforeach; ?>
-			<?php endif; ?>
+			<?php app_flash() ?>
 
 			<?= Form::start('/login', 'POST'); ?>
 				<div class="form-group">

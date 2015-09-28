@@ -6,6 +6,8 @@
 		<div class="container">
 
 			<h2>Register</h2>
+			
+			<?php app_flash(); ?>
 
 			<?= Form::start('/register', 'POST'); ?>
 				<div class="form-group">
