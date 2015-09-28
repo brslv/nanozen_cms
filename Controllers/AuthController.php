@@ -3,6 +3,7 @@
 namespace Nanozen\Controllers;
 
 use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
+use Nanozen\App\Injector;
 
 /**
  * Class AuthController
@@ -12,6 +13,13 @@ use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
  */
 class AuthController extends BaseController
 {
+
+	protected $userRepository;
+
+	public function __construct()
+	{
+		$this->userRepository = Injector::call('\Nanozen\Repositories\UserRepository');
+	}	
 
 	public function register()
 	{
@@ -24,21 +32,23 @@ class AuthController extends BaseController
 	public function postRegister()
 	{
 		// Todo: extract the register logic bellow in UserRepository.
-		$username =  $this->binding->username;
-		$password = password_hash($this->binding->password, PASSWORD_DEFAULT);
-		$email = $this->binding->email;
+		// $username =  $this->binding->username;
+		// $password = password_hash($this->binding->password, PASSWORD_DEFAULT);
+		// $email = $this->binding->email;
 
-		$query = "INSERT INTO users (username, password, email, role) VALUES (:username, :password, :email, 1)";
+		// $query = "INSERT INTO users (username, password, email, role) VALUES (:username, :password, :email, 1)";
 		
-		$stmt = $this->db()->prepare($query);
+		// $stmt = $this->db()->prepare($query);
 		
-		$stmt->execute([
-			':username' => $username,
-			':password' => $password,
-			':email' => $email,
-		]);
-		
-		echo "This is the post register" . $this->uni;
+		// $stmt->execute([
+		// 	':username' => $username,
+		// 	':password' => $password,
+		// 	':email' => $email,
+		// ]);
+
+		$bindedUser = $this->binding;	
+		$registeredUser = $this->userRepository->add($bindedUser);
+		var_dump($registeredUser);
 	}
 	
 }

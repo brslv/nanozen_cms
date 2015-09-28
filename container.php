@@ -57,3 +57,11 @@ Injector::prepare(
 		[
 				'\Nanozen\Providers\CustomRouting\DispatchingProvider',
 		]);
+
+// CMS specific:
+
+Injector::prepare(
+	InjectorTypes::TYPE_CLASS,
+	'userRepository',
+	'\Nanozen\Repositories\UserRepository'
+	);

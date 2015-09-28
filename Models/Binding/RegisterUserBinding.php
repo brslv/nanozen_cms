@@ -2,6 +2,8 @@
 
 namespace Nanozen\Models\Binding;
 
+use Nanozen\Factories\UserFactory;
+
 /**
  * Class RegisterUserBinding
  *
@@ -15,4 +17,5 @@ class RegisterUserBinding
 	public $email;
 
 	public $password;
+	
 }
