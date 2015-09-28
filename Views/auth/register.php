@@ -21,7 +21,7 @@
 				</div>
 
 				<div class="form-group">
-					<?= Form::submit('registerButton', ['class' => 'btn btn-success']); ?>
+					<?= Form::submit('registerButton', 'Register', ['class' => 'btn btn-success']); ?>
 				</div>
 			<?= Form::stop(); ?>
 

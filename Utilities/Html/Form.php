@@ -53,8 +53,9 @@ class Form
 		return InputBuilder::build($name, null, $attributes);
 	}
 
-	public static function submit($name, array $attributes = null)
+	public static function submit($name, $value, array $attributes = null)
 	{
+		$attributes['value'] = $value;
 		return InputBuilder::build('submit', $name, null, $attributes);
 	}	
 
