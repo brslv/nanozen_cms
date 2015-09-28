@@ -1,6 +1,6 @@
-<?php app_header(); ?>
+<?php include_once app_header(); ?>
 
-	<?php app_navigation(); ?>
+	<?php include_once app_navigation(); ?>
 
 	<main class="app-main">
 		<div class="container">
@@ -53,4 +53,4 @@
 		</div>
 	</main>
 
-<?php app_footer(); ?>
+<?php include_once app_footer(); ?>

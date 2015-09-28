@@ -18,7 +18,10 @@ class ViewProvider implements ViewProviderContract
 
 	public $dependsOn = ['viewCommonDataProviderContract'];
 	
-	protected $data = [];
+	protected $data = [
+		'appTitle' => 'NanozenCMS',
+		'appDescription' => 'A simple zen driven CMS!',
+	];
 
 	protected $path;
 
@@ -58,12 +61,14 @@ class ViewProvider implements ViewProviderContract
 	{
 		$this->view = $view;
 		$this->data = is_null($data) 
-			? $this->data 
+			? array_merge(
+					$this->data, 
+					$this->viewCommonDataProviderContract->getCommonData())
 				: array_merge(
 					$data, 
 					$this->data, 
 					$this->viewCommonDataProviderContract->getCommonData());
-		
+
 		extract($this->escapeData());
 
 		if (isset($this->requiredObject) && ! is_null($this->requiredObject)) {

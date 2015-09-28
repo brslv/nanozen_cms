@@ -1,13 +1,13 @@
 <?php use \Nanozen\Utilities\Html\Form; ?>
-<?php app_header() ?>
-<?php app_navigation(); ?>
+<?php include_once app_header() ?>
+<?php include_once app_navigation(); ?>
 
 	<main class="app-main">
 		<div class="container">
 
 			<h2>Login</h2>
 
-			<?php app_flash() ?>
+			<?php include_once app_flash() ?>
 
 			<?= Form::start('/login', 'POST'); ?>
 				<div class="form-group">
@@ -26,4 +26,4 @@
 		</div>
 	</main>
 
-<?php app_footer(); ?>
+<?php include_once app_footer(); ?>

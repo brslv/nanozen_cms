@@ -21,6 +21,8 @@ class ViewCommonDataProvider
 	{
 		// Invoke your methods bellow:
 		// e.g: $this->users();
+		$this->loadAppTitle();
+		$this->loadAppDescription();
 		
 		// Return logic, nothing fancy, leave it as is:
 		if (is_null($this->commonData)) {
@@ -64,4 +66,23 @@ class ViewCommonDataProvider
 	 *	}
 	 */
 	
+	private function loadAppTitle()
+	{
+		$stmt= $this->db()->prepare("SELECT value FROM options WHERE name = :name LIMIT 1");
+		$stmt->execute([':name' => 'app_title']);
+		$appTitle = $stmt->fetch(null, false)->value;
+
+		$this->commonData['appTitle'] = $appTitle;
+	}
+
+	private function loadAppDescription()
+	{
+		$stmt = $this->db()->prepare("SELECT value FROM options WHERE name = :name");
+		$stmt->execute([':name' => 'app_description']);
+		$appDescription = $stmt->fetch(null, false)->value;
+
+		$this->commonData['appDescription'] = $appDescription;
+	}
+	
+
 }
