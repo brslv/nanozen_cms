@@ -132,7 +132,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 
 		// TODO: implement error messages.
 
-		Session::flash('flash_message', 'Invalid credentials. Please try again.');
+		Session::flash('flash_messages', 'Invalid credentials. Please try again.');
 		return false;
 	}
 

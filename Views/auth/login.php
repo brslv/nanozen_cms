@@ -10,8 +10,8 @@
 
 			<h2>Login</h2>
 
-			<?php if (Session::has('flash_message')) : ?>
-				<?php foreach(Session::flash('flash_message') as $flash) : ?>
+			<?php if (Session::flash()) : ?>
+				<?php foreach(Session::flash('flash_messages') as $flash) : ?>
 					<div class="alert alert-warning">
 						<?= $flash; ?>
 					</div>
