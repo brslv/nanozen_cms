@@ -7,6 +7,8 @@
 
 			<h2>Register</h2>
 			
+			<hr />
+
 			<?php include_once app_flash(); ?>
 
 			<?= Form::start('/register', 'POST'); ?>

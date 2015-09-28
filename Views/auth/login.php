@@ -7,6 +7,8 @@
 
 			<h2>Login</h2>
 
+			<hr />
+
 			<?php include_once app_flash() ?>
 
 			<?= Form::start('/login', 'POST'); ?>

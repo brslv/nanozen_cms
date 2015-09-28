@@ -128,6 +128,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 			Session::put('bannedOn', $bannedOn);
 			Session::put('rememberToken', $rememberToken);
 
+			Session::flash('flash_messages', Communicator::SUCCESSFULLY_LOGGED);
 			return true;
 		}
 

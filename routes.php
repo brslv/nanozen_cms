@@ -13,3 +13,6 @@ $router->post('register', 'AuthController@postRegister');
 $router->get('login', 'AuthController@login');
 $router->post('login', 'AuthController@postLogin');
 $router->get('logout', 'AuthController@logout');
+
+// Backend
+$router->get('back', 'BackendController@index');

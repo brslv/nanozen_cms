@@ -62,7 +62,7 @@ class AuthController extends BaseController
 	{
 		$bindedUser = $this->binding;
 		if ($this->userRepository->login($bindedUser)) {
-			echo "Logged";
+			Redirect::loggedUser('/back');
 		} else {
 			header('Location: /login');
 		}
