@@ -50,4 +50,21 @@ class SessionProvider implements SessionProviderContract
 		return isset($_SESSION[$key]);
 	}
 
+	public static function flash($name, $message = '')
+	{
+		if ( ! self::get($name)) {
+			self::put($name, [$message]);
+		} else {
+			if ($message != '' && ! is_null($message)) {
+				$_SESSION[$name][] = $message;
+				return;
+			}
+
+			$session = self::get($name);
+			self::remove($name);
+
+			return $session;
+		}
+	}
+
 }

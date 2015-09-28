@@ -9,6 +9,7 @@ use Nanozen\Models\Binding\LoginUserBinding;
 use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Models\Binding\RegisterUserBinding;
 use Nanozen\Contracts\Repositories\UserRepositoryContract;
+use Nanozen\Providers\Error\ErrorProvider as Error;
 
 /**
 * Class UserRepository
@@ -40,7 +41,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 
 		$id = $this->db()->lastInsertId();
 
-		$persistedUser = $this->findById($id);
+		$persistedUser = $this->find(['id' => $id]);
 		return $persistedUser;
 	}
 
@@ -58,7 +59,6 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 
 		$query = $this->constructQuery($params);
 		$executableArray = $this->constructExecutableArray($params);
-		var_dump($executableArray);
 
 		$stmt = $this->db()->prepare($query);
 		$stmt->execute($executableArray);
@@ -132,7 +132,41 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 
 		// TODO: implement error messages.
 
+		Session::flash('flash_message', 'Invalid credentials. Please try again.');
 		return false;
 	}
+
+	/**
+	 * Logs out users
+	 * 
+	 * @return bool
+	 */
+	public function logout()
+	{
+		if (Session::has('username')) {
+			Session::remove('username');	
+			Session::remove('firstName');
+			Session::remove('lastName');
+			Session::remove('email');
+			Session::remove('roleId');
+			Session::remove('active');
+			Session::remove('bannedOn');
+			Session::remove('rememberToken');
+
+			return true;
+		}
+
+		return false;
+	}
+    
+    /**
+     * Checks if a user is logged.
+     * 
+     * @return boolean [description]
+     */
+    public function isLogged()
+    {
+        return Session::has('username');
+    }
 
 }

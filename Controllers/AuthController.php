@@ -56,7 +56,16 @@ class AuthController extends BaseController
 	{
 		$bindedUser = $this->binding;
 		if ($this->userRepository->login($bindedUser)) {
-			echo 'Hi, ' . Session::get('username');
+			echo "Logged";
+		} else {
+			header('Location: /login');
+		}
+	}
+
+	public function logout()
+	{
+		if ($this->userRepository->logout()) {
+			header('Location: /'); // TODO: make redirect object
 		}
 	}
 	

@@ -1,3 +1,4 @@
+<?php use \Nanozen\Providers\Session\SessionProvider as Session; ?>
 <header>
 		<nav class="navbar navbar-default">
 			<div class="container">
@@ -18,12 +19,16 @@
 					<div class="collapse navbar-collapse"
 						id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li><a href="#">Home</a></li>
+							<li><a href="/">Home</a></li>
 						</ul>
 
 						<ul class="nav navbar-nav navbar-right">
-							<li><a href="#">Register</a></li>
-							<li><a href="#">Login</a></li>
+							<?php if (Session::has('username')) : ?>
+								<li><a href="/logout">Logout</a></li>
+							<?php else: ?>
+								<li><a href="/register">Register</a></li>
+								<li><a href="/login">Login</a></li>
+							<?php endif; ?>
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->
