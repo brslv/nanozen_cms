@@ -5,6 +5,8 @@ namespace Nanozen\Repositories;
 use Nanozen\Models\User;
 use Nanozen\Utilities\Hash;
 use Nanozen\Factories\UserFactory;
+use Nanozen\Models\Binding\LoginUserBinding;
+use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Models\Binding\RegisterUserBinding;
 use Nanozen\Contracts\Repositories\UserRepositoryContract;
 
@@ -22,7 +24,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 	 * 
 	 * @param RegisterUserBinding $user The RegisterUserBinding, containing all the register information.
 	 */
-	public function add(RegisterUserBinding $user)
+	public function save(RegisterUserBinding $user)
 	{
 		$query = "INSERT INTO users(username, password, email, role_id) VALUES(:username, :password, :email, :role_id)";
 		$stmt = $this->db()->prepare($query);
@@ -38,7 +40,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 
 		$id = $this->db()->lastInsertId();
 
-		$persistedUser = $this->get($id);
+		$persistedUser = $this->findById($id);
 		return $persistedUser;
 	}
 
@@ -48,16 +50,89 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 	 * @param  int $id 
 	 * @return \Nanozen\Models\User
 	 */
-	public function get($id) 
+	public function find(array $params) 
 	{
-		$query = "SELECT id, username, password, first_name, last_name, email, role_id, active, banned_on, remember_token FROM users WHERE id = :id";
+		if (empty($params)) {
+			throw new \Exception('Params cannot be empty.');
+		}
+
+		$query = $this->constructQuery($params);
+		$executableArray = $this->constructExecutableArray($params);
+		var_dump($executableArray);
+
 		$stmt = $this->db()->prepare($query);
-		$stmt->execute([
-			':id' => $id,
-		]);
+		$stmt->execute($executableArray);
 		$user = $stmt->fetch(\PDO::FETCH_OBJ, false);
 	
 		return UserFactory::make($user);
-	}	
+	}
+
+	private function constructQuery($params) 
+	{
+		$query = "SELECT id, username, password, first_name, last_name, email, role_id, active, banned_on, remember_token FROM users WHERE ";
+		$counter = 0;
+		$paramsCount = count($params);
+
+		foreach ($params as $key => $value) {
+			$counter++;
+			$query .= $key . ' = :' . $key;	
+
+			if ($counter == $paramsCount - 1) {
+				$query .= ', ';
+			}
+		}
+
+		return $query;
+	}
+
+	private function constructExecutableArray($params)
+	{
+		$executableArray = [];
+
+		foreach ($params as $key => $value) {
+			$executableArray[':' . $key] = $value;
+		}
+
+		return $executableArray;
+	}
+
+	/**
+	 * Logs in user.
+	 *
+	 * @param  LoginUserBinding $user
+	 * @return bool
+	 */
+	public function login(LoginUserBinding $user)
+	{
+		$username = $user->username;
+		$password = $user->password;
+
+		$user = $this->find(['username' => $username]);
+		
+		if ($user && Hash::verifyPassword($password, $user->getPassword())) {
+			$firstName = $user->getFirstName();
+			$lastName = $user->getLastName();
+			$email = $user->getEmail();
+			$roleId = $user->getRoleId();
+			$active = $user->getActive();
+			$bannedOn = $user->getBannedOn();
+			$rememberToken = $user->getRememberToken();
+
+			Session::put('username', $username);
+			Session::put('firstName', $firstName);
+			Session::put('lastName', $lastName);
+			Session::put('email', $email);
+			Session::put('roleId', $roleId);
+			Session::put('active', $active);
+			Session::put('bannedOn', $bannedOn);
+			Session::put('rememberToken', $rememberToken);
+
+			return true;
+		}
+
+		// TODO: implement error messages.
+
+		return false;
+	}
 
 }

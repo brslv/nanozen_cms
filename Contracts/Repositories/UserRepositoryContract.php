@@ -13,8 +13,8 @@ use Nanozen\Models\Binding\RegisterUserBinding;
 interface UserRepositoryContract 
 {
 	
-	function add(RegisterUserBinding $user);
+	function save(RegisterUserBinding $user);
 
-	function get($id);
+	function find(array $params);
 
 }

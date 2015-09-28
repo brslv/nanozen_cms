@@ -116,9 +116,9 @@ class User
      *
      * @return mixed
      */
-    public function getRole()
+    public function getRoleId()
     {
-        return $this->role;
+        return $this->roleId;
     }
 
     /**
@@ -130,4 +130,15 @@ class User
     {
         return $this->bannedOn;
     }
+
+    /**
+     * Gets the value of rememberToken.
+     *
+     * @return mixed
+     */
+    public function getRememberToken()
+    {
+        return $this->rememberToken;
+    }
+    
 }

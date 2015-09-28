@@ -4,6 +4,7 @@ namespace Nanozen\Controllers;
 
 use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
 use Nanozen\App\Injector;
+use Nanozen\Providers\Session\SessionProvider as Session;
 
 /**
  * Class AuthController
@@ -38,9 +39,25 @@ class AuthController extends BaseController
 	public function postRegister()
 	{
 		$bindedUser = $this->binding;
-		$registeredUser = $this->userRepository->add($bindedUser);
+		$registeredUser = $this->userRepository->save($bindedUser);
 
 		return $registeredUser;
+	}
+
+	public function login()
+	{
+		$this->view()->render('auth.login');
+	}
+
+	/**
+	 * @bind \Nanozen\Models\Binding\LoginUserBinding
+	 */
+	public function postLogin()
+	{
+		$bindedUser = $this->binding;
+		if ($this->userRepository->login($bindedUser)) {
+			echo 'Hi, ' . Session::get('username');
+		}
 	}
 	
 }
