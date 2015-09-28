@@ -23,28 +23,32 @@ class User
 
 	private $active;
 
-	private $role;
+	private $roleId;
 
 	private $bannedOn;
+
+    private $rememberToken;
 
 	public function __construct(
 		$username, 
 		$password, 
 		$email, 
-		$role, 
+		$roleId, 
 		$active, 
 		$firstName = null, 
 		$lastName = null, 
-		$bannedOn = null
+		$bannedOn = null,
+        $rememberToken = null
 	) {
 		$this->username = $username;
 		$this->password = $password;
 		$this->email = $email;
-		$this->role = $role;
+		$this->roleId = $roleId;
 		$this->active = $active;
 		$this->firstName = $firstName;
 		$this->lastName = $lastName;
 		$this->bannedOn = $bannedOn;
+        $this->rememberToken = $rememberToken;
 	}
 
     /**

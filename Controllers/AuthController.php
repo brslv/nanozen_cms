@@ -21,6 +21,11 @@ class AuthController extends BaseController
 		$this->userRepository = Injector::call('\Nanozen\Repositories\UserRepository');
 	}	
 
+	/**
+	 * Displays a registration form.
+	 * 
+	 * @return void
+	 */
 	public function register()
 	{
 		$this->view()->render('auth.register');
@@ -28,27 +33,14 @@ class AuthController extends BaseController
 
 	/**
 	 * @bind \Nanozen\Models\Binding\RegisterUserBinding
+	 * @return \Nanozen\Models\User
 	 */
 	public function postRegister()
 	{
-		// Todo: extract the register logic bellow in UserRepository.
-		// $username =  $this->binding->username;
-		// $password = password_hash($this->binding->password, PASSWORD_DEFAULT);
-		// $email = $this->binding->email;
-
-		// $query = "INSERT INTO users (username, password, email, role) VALUES (:username, :password, :email, 1)";
-		
-		// $stmt = $this->db()->prepare($query);
-		
-		// $stmt->execute([
-		// 	':username' => $username,
-		// 	':password' => $password,
-		// 	':email' => $email,
-		// ]);
-
-		$bindedUser = $this->binding;	
+		$bindedUser = $this->binding;
 		$registeredUser = $this->userRepository->add($bindedUser);
-		var_dump($registeredUser);
+
+		return $registeredUser;
 	}
 	
 }

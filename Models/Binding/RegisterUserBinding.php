@@ -12,6 +12,7 @@ use Nanozen\Factories\UserFactory;
  */
 class RegisterUserBinding 
 {
+	
 	public $username;
 
 	public $email;

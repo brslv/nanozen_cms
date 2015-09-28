@@ -14,7 +14,7 @@ use Nanozen\Models\Binding\RegisterUserBinding;
 class UserFactory
 {
 
-	const DEFAULT_USER_ROLE = 1;
+	const DEFAULT_USER_ROLE = 2; // user
 
 	const DEFAULT_USER_ACTIVE = 1;
 
@@ -25,11 +25,12 @@ class UserFactory
 		$email = $info->email;
 		$firstName = isset($info->firstName) ? $info->firstName : null;
 		$lastName = isset($info->lastName) ? $info->lastName : null;
-		$role = isset($info->role) ? $info->role : static::DEFAULT_USER_ROLE;
+		$roleId = isset($info->roleId) ? $info->roleId : static::DEFAULT_USER_ROLE;
 		$active = isset($info->active) ? $info->active : static::DEFAULT_USER_ACTIVE;
 		$bannedOn = null;
+		$rememberToken = isset($info->rememberToken) ? $info->rememberToken : null;
 
-		return new User($username, $password, $email, $role, $active, $firstName, $lastName, $bannedOn);
+		return new User($username, $password, $email, $roleId, $active, $firstName, $lastName, $bannedOn, $rememberToken);
 	}
 
 }

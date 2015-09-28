@@ -24,7 +24,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 	 */
 	public function add(RegisterUserBinding $user)
 	{
-		$query = "INSERT INTO users(username, password, email, role) VALUES(:username, :password, :email, :role)";
+		$query = "INSERT INTO users(username, password, email, role_id) VALUES(:username, :password, :email, :role_id)";
 		$stmt = $this->db()->prepare($query);
 
 		// TODO: validate the information of $user.
@@ -33,7 +33,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 			':username' => $user->username,
 			':password' => Hash::password($user->password),
 			':email' => $user->email,
-			':role' => UserFactory::DEFAULT_USER_ROLE,
+			':role_id' => UserFactory::DEFAULT_USER_ROLE,
 		]);
 
 		$id = $this->db()->lastInsertId();
@@ -50,7 +50,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 	 */
 	public function get($id) 
 	{
-		$query = "SELECT id, username, password, first_name, last_name, email, role, active, banned_on FROM users WHERE id = :id";
+		$query = "SELECT id, username, password, first_name, last_name, email, role_id, active, banned_on, remember_token FROM users WHERE id = :id";
 		$stmt = $this->db()->prepare($query);
 		$stmt->execute([
 			':id' => $id,
@@ -58,6 +58,6 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 		$user = $stmt->fetch(\PDO::FETCH_OBJ, false);
 	
 		return UserFactory::make($user);
-	}
+	}	
 
 }
