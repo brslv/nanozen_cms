@@ -11,7 +11,7 @@ use Nanozen\Models\Binding\RegisterUserBinding;
 * @author brslv
 * @package Nanozen\Factories
 */
-class UserFactory
+class UserFactory implements FactoryContract
 {
 
 	const DEFAULT_USER_ROLE = 2; // user

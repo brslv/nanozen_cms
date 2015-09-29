@@ -20,5 +20,11 @@ class Communicator
 	const INVALID_CREDENTIALS = 'Invalid credentials. Please try again.';
 
 	const SUCCESSFULLY_LOGGED = 'You have successfully logged in.';
+
+	const INVALID_PAGE_TITLE = "Page title must be in the range [3...40] symbols.";
+
+	const INVALID_PAGE_CONTENT = "Page content must be at least 3 symbols long.";
+
+	const INVALID_PAGE_ACTIVE_STATUS = "Page status must be 'visible' or 'hidden'.";
 	
 }

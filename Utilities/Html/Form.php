@@ -66,7 +66,7 @@ class Form
 
 	public static function dropdown($name, array $options, array $attributes = null)
 	{
-		$dropdown = sprintf('<select');
+		$dropdown = sprintf('<select name="' . $name . '" ');
 
 		static::putAttributes($attributes, $dropdown);
 

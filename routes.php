@@ -16,3 +16,7 @@ $router->get('logout', 'AuthController@logout');
 
 // Backend
 $router->get('back', 'BackendController@index');
+
+// Pages
+$router->get('pages/create', 'PagesController@create');
+$router->post('pages', 'PagesController@store');

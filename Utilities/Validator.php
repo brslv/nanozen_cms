@@ -2,6 +2,7 @@
 
 namespace Nanozen\Utilities;
 
+use Nanozen\Models\Binding\StorePageBinding;
 use Nanozen\Models\Binding\RegisterUserBinding;
 use Nanozen\Providers\Session\SessionProvider as Session;
 
@@ -15,6 +16,28 @@ class Validator
 {
 
 	const PASSWORD_LENGTH = 6;
+
+	public static function validatePageCreationInformation(StorePageBinding $page)
+	{
+		$valid = true;
+
+		if ( ! Validator::stringLength($page->title, 3, 40)) {
+			Session::flash('flash_messages', Communicator::INVALID_PAGE_TITLE);
+			$valid = false;
+		}
+
+		if ( ! Validator::stringLength($page->content, 3, 65000)) {
+			Session::flash('flash_messages', Communicator::INVALID_PAGE_CONTENT);
+			$valid = false;
+		}
+
+		if ( ! Validator::inRange($page->active, 0, 1)) {
+			Session::flash('flash_messages', Communicator::INVALID_PAGE_ACTIVE_STATUS);
+			$valid = false;
+		}
+
+		return $valid;
+	}
 
 	public static function validateRegistrationInformation(RegisterUserBinding $user)
 	{
@@ -57,5 +80,10 @@ class Validator
 		}
 
 		return true;
+	}
+
+	public static function inRange($number, $bottom, $top) 
+	{
+		return $number >= $bottom && $number <= $top;
 	}
 }

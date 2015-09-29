@@ -5,7 +5,7 @@
 					Pages <span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="">Add new page</a></li>
+					<li><a href="pages/create">Add new page</a></li>
 					<li role="separator" class="divider"></li>
 					<li class="dropdown-header">Select page to edit:</li>
 					<li><a href="">About</a></li>
