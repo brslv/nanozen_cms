@@ -85,13 +85,13 @@ class Form
 		return $dropdown;	
 	}
 
-	public static function textarea($name, array $attributes = null)
+	public static function textarea($name, array $attributes = null, $content = null)
 	{
 		$textarea = sprintf('<textarea name="%s"', $name);
 
 		static::putAttributes($attributes, $textarea);
 
-		$textarea .= '></textarea>';
+		$textarea .= '>' . $content . '</textarea>';
 
 		return $textarea;
 	}

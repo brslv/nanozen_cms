@@ -20,3 +20,6 @@ $router->get('back', 'BackendController@index');
 // Pages
 $router->get('pages/create', 'PagesController@create');
 $router->post('pages', 'PagesController@store');
+
+$router->get('pages/{id:i}/edit', 'PagesController@edit');
+$router->put('pages/{id:i}', 'PagesController@update');

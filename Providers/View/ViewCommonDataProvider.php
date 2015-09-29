@@ -3,6 +3,7 @@
 namespace Nanozen\Providers\View;
 
 use Nanozen\App\Injector;
+use Nanozen\Factories\PageFactory;
 
 /**
  * Class ViewCommonDataProvider
@@ -90,8 +91,13 @@ class ViewCommonDataProvider
 		$stmt = $this->db()->prepare("SELECT id, title, content, active, deleted_on FROM pages");
 		$stmt->execute();
 		$pages = $stmt->fetch();
+		$pagesObjectsArray = [];
 
-		$this->commonData['pages'] = $pages;
+		foreach ($pages as $page) {
+			$pagesObjectsArray[] = PageFactory::make($page);
+		}
+
+		$this->commonData['pages'] = $pagesObjectsArray;
 	}
 	
 

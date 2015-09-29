@@ -4,7 +4,7 @@ namespace Nanozen\Providers\View;
 
 use Nanozen\Contracts\Providers\View\ViewProviderContract;
 use Nanozen\App\Injector;
-use Nanozen\Utilities\Util;
+use Nanozen\Utilities\Escpr;
 use Nanozen\Utilities\Html\Form;
 
 /**
@@ -100,7 +100,7 @@ class ViewProvider implements ViewProviderContract
 	private function escapeData()
 	{
 		if ($this->escapeHtmlChars) {
-			$this->data = Util::e($this->data);
+			$this->data = Escpr::escape($this->data);
 		}
 		
 		return $this->data;

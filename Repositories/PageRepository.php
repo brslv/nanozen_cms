@@ -3,6 +3,7 @@
 namespace Nanozen\Repositories;
 
 use Nanozen\Models\Page;
+use Nanozen\Utilities\Util;
 use Nanozen\Utilities\Hash;
 use Nanozen\Utilities\Validator;
 use Nanozen\Factories\PageFactory;
@@ -36,7 +37,7 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 		$persistedPage = $this->find(['id' => $id]);
 
 		if ($id) {
-			Session::flash('flash_messages', 'Page "' . $persistedPage->getTitle() . '" successfully added.');
+			Session::flash('flash_messages', 'Page "' . Util::e($persistedPage->getTitle()) . '" successfully added.');
 		} else {
 			Session::flash('flash_messages', 'En error occured. Please try again.');
 		}

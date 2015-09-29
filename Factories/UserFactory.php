@@ -4,6 +4,7 @@ namespace Nanozen\Factories;
 
 use Nanozen\Models\User;
 use Nanozen\Models\Binding\RegisterUserBinding;
+use Nanozen\Contracts\Factories\FactoryContract;
 
 /**
 * Class UserFactory

@@ -53,4 +53,11 @@ class PagesController extends BaseController
 		// -- return a page model from the newly created page.
 	}
 
+	public function edit($id)
+	{
+		$data = ['page' => $this->pageRepository->find(['id' => $id])];
+
+		$this->view()->render('pages.edit', $data);
+	}
+
 }
