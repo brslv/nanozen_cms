@@ -8,9 +8,9 @@
 					<li><a href="pages/create">Add new page</a></li>
 					<li role="separator" class="divider"></li>
 					<li class="dropdown-header">Select page to edit:</li>
-					<li><a href="">About</a></li>
-					<li><a href="">Projects</a></li>
-					<li><a href="">Contacts</a></li>
+					<?php foreach ($pages as $page) : ?>
+						<li><a href=""><?= $page->title; ?></a></li>	
+					<?php endforeach; ?>
 				</ul>
 			</li>
 

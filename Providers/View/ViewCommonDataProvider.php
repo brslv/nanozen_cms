@@ -23,6 +23,7 @@ class ViewCommonDataProvider
 		// e.g: $this->users();
 		$this->loadAppTitle();
 		$this->loadAppDescription();
+		$this->loadAllPages();
 		
 		// Return logic, nothing fancy, leave it as is:
 		if (is_null($this->commonData)) {
@@ -82,6 +83,15 @@ class ViewCommonDataProvider
 		$appDescription = $stmt->fetch(null, false)->value;
 
 		$this->commonData['appDescription'] = $appDescription;
+	}
+
+	private function loadAllPages()
+	{
+		$stmt = $this->db()->prepare("SELECT id, title, content, active, deleted_on FROM pages");
+		$stmt->execute();
+		$pages = $stmt->fetch();
+
+		$this->commonData['pages'] = $pages;
 	}
 	
 
