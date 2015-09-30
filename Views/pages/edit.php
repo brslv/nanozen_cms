@@ -27,7 +27,7 @@
 			</div>
 
 			<div class="form-group">
-				<?= Form::dropdown('active', [1 => 'Visible', 0 => 'Hidden'], ['class' => 'form-control', 'placeholder' => 'Status']); ?>
+				<?= Form::dropdown('active', [1 => 'Visible', 0 => 'Hidden'], ['class' => 'form-control', 'placeholder' => 'Status'], $page->getActive()); ?>
 			</div>
 
 			<div class="form-group">
