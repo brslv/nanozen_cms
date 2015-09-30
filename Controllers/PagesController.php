@@ -31,6 +31,12 @@ class PagesController extends BaseController
 
 		$this->view()->render('pages.create');
 	}
+    
+    public function show()
+    {
+        // TODO: get a page,
+        // constructed with it's blocks and display it.
+    }
 
 	/**
 	 * Stores a page to the database.
