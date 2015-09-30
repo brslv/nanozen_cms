@@ -24,6 +24,7 @@ class PagesController extends BaseController
 	
 	public function create()
 	{
+		Redirect::guests('/');
 
 		$this->view()->render('pages.create');
 	}
@@ -35,6 +36,7 @@ class PagesController extends BaseController
 	 */
 	public function store()
 	{
+		Redirect::guests('/');
 
 		$bindedPage = $this->binding;
 		$persistedPage = $this->pageRepository->save($bindedPage);
@@ -55,6 +57,8 @@ class PagesController extends BaseController
 
 	public function edit($id)
 	{
+		Redirect::guests('/');
+
 		$data = ['page' => $this->pageRepository->find(['id' => $id])];
 
 		$this->view()->render('pages.edit', $data);

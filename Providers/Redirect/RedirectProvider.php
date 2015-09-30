@@ -21,7 +21,7 @@ class RedirectProvider implements RedirectProviderContract
 	}
 
 	public static function loggedUser($location) {
-		$userRepository = Injector::call('\Nanozen\Repositories\userRepository');
+		$userRepository = Injector::call('\Nanozen\Repositories\UserRepository');
 
 		if ($userRepository->hasLogged()) {
 			static::to($location);
@@ -30,7 +30,7 @@ class RedirectProvider implements RedirectProviderContract
 
 	public static function guests($location) 
 	{
-		$userRepository = Injector::call('\Nanozen\Repositories\userRepository');
+		$userRepository = Injector::call('\Nanozen\Repositories\UserRepository');
 
 		if ( ! $userRepository->hasLogged()) {
 			static::to($location);
