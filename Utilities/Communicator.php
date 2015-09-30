@@ -26,5 +26,9 @@ class Communicator
 	const INVALID_PAGE_CONTENT = "Page content must be at least 3 symbols long.";
 
 	const INVALID_PAGE_ACTIVE_STATUS = "Page status must be 'visible' or 'hidden'.";
+    
+    const PAGE_DOES_NOT_EXIST = 'Page does not exist';
+    
+    const PAGE_SUCCESSFULLY_DELETED = 'Page successfully deleted.';
 	
 }

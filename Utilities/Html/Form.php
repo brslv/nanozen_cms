@@ -101,9 +101,9 @@ class Form
 		return Csrf::generate();
 	}
 
-	public static function start($action, $method = null, array $attributes = null)
+	public static function start($action, $method = null, array $attributes = null, $csrf = true)
 	{
-		return FormBuilder::build($action, $method, $attributes);
+		return FormBuilder::build($action, $method, $attributes, $csrf);
 	}
 
 	public static function stop()

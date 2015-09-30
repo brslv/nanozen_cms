@@ -14,7 +14,10 @@ use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
  */
 class PagesController extends BaseController
 {
-
+    
+    /**
+     * @var \Nanozen\Repositories\PageRepository
+     */
 	private $pageRepository;
 
 	public function __construct()
@@ -46,22 +49,41 @@ class PagesController extends BaseController
 		} else {
 			Redirect::to('/pages/create');
 		}
-
-		// -- create a page model
-		// -- create a repository
-		
-		// -- create a page factory
-		// -- store the page
-		// -- return a page model from the newly created page.
 	}
 
 	public function edit($id)
 	{
 		Redirect::guests('/');
 
-		$data = ['page' => $this->pageRepository->find(['id' => $id])];
+        $page = $this->pageRepository->find(['id' => $id]);
+        
+        if (is_null($page)) {
+            http_response_code(404);
+            $this->view()->render('errors.404');
+        }
+        
+		$data = ['page' => $page];
 
 		$this->view()->render('pages.edit', $data);
 	}
+    
+    /**
+     * @bind \Nanozen\Models\Binding\UpdatePageBinding
+     */
+    public function update($id) 
+    {
+        Redirect::guests('/');
+        
+        echo "This will update page.";
+    }
+    
+    public function delete($id) 
+    {
+        Redirect::guests('/');
+        
+        $this->pageRepository->remove($id);
+        
+        Redirect::to('/back');
+    }
 
 }

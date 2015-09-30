@@ -2,16 +2,13 @@
 
 namespace Nanozen\Repositories;
 
-use Nanozen\Models\Page;
-use Nanozen\Utilities\Util;
-use Nanozen\Utilities\Hash;
+use Nanozen\Utilities\Escpr;
 use Nanozen\Utilities\Validator;
 use Nanozen\Factories\PageFactory;
 use Nanozen\Utilities\Communicator;
 use Nanozen\Models\Binding\StorePageBinding;
 use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Contracts\Repositories\PageRepositoryContract;
-use Nanozen\Providers\Redidect\RedirectProvider as Redirect;
 
 /**
 * Class PageRepository
@@ -22,6 +19,10 @@ use Nanozen\Providers\Redidect\RedirectProvider as Redirect;
 class PageRepository extends BaseRepository implements PageRepositoryContract
 {
 
+    const ACTIVE_PAGE_FLAG = 1;
+    
+    const INACTIVE_PAGE_FLAG = 0;
+    
 	public function save(StorePageBinding $page)
 	{
 		if ( ! Validator::validatePageCreationInformation($page)) return;
@@ -37,13 +38,27 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 		$persistedPage = $this->find(['id' => $id]);
 
 		if ($id) {
-			Session::flash('flash_messages', 'Page "' . Util::e($persistedPage->getTitle()) . '" successfully added.');
+            $pageTitle = $persistedPage->getTitle();
+			Session::flash('flash_messages', 'Page "' . Escpr::escape($pageTitle) . '" successfully added.');
 		} else {
 			Session::flash('flash_messages', 'En error occured. Please try again.');
 		}
 
 		return $persistedPage;
 	}
+    
+    public function all($onlyActive = true) 
+    {
+        $query = "SELECT id, title, content, active, deleted_on FROM pages";
+        
+        if ($onlyActive) {
+            $query .= " WHERE active = 1";
+        }
+        
+        $pages = $this->db()->query($query)->fetch();
+        
+        return $pages;
+    }
 
 	/**
 	 * Get a page frrom the database, based on id.
@@ -51,7 +66,7 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 	 * @param  int $id 
 	 * @return \Nanozen\Models\Page
 	 */
-	public function find(array $params) 
+	public function find(array $params, $onlyActive = true) 
 	{
 		if (empty($params)) {
 			throw new \Exception('Params cannot be empty.');
@@ -67,7 +82,7 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 		return PageFactory::make($page);
 	}
 
-	private function constructQuery($params) 
+	private function constructQuery($params, $onlyActive = true) 
 	{
 		$query = "SELECT id, title, content, active, deleted_on FROM pages WHERE ";
 		$counter = 0;
@@ -81,6 +96,8 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 				$query .= ', ';
 			}
 		}
+        
+        $query .= sprintf(" AND active = %s", $onlyActive ? self::ACTIVE_PAGE_FLAG : self::INACTIVE_PAGE_FLAG);
 
 		return $query;
 	}
@@ -95,5 +112,28 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 
 		return $executableArray;
 	}
+    
+    public function remove($id)
+    {
+        $page = $this->find(['id' => $id]);
+        
+        if ($page) {
+            $stmt = $this->db()->prepare(
+                    "UPDATE pages SET active = :active, deleted_on = :deleted_on WHERE id = :id");
+            
+            $result = $stmt->execute([
+                ':active' => 0,
+                ':deleted_on' => (new \DateTime())->format('Y-m-d H:i:s'),
+                ':id' => $page->getId(),
+            ]);
+            
+            if ($result) {
+                Session::flash('flash_messages', Communicator::PAGE_SUCCESSFULLY_DELETED);
+                return true;
+            }
+        } else {
+            Session::flash('flash_messages', Communicator::PAGE_DOES_NOT_EXIST);
+        }
+    }
 
 }

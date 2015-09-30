@@ -88,9 +88,8 @@ class ViewCommonDataProvider
 
 	private function loadAllPages()
 	{
-		$stmt = $this->db()->prepare("SELECT id, title, content, active, deleted_on FROM pages");
-		$stmt->execute();
-		$pages = $stmt->fetch();
+        $pagesRepository = Injector::call('\Nanozen\Repositories\PageRepository');
+		$pages = $pagesRepository->all();
 		$pagesObjectsArray = [];
 
 		foreach ($pages as $page) {

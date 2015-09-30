@@ -17,6 +17,9 @@ class BaseRepository
 		'databaseProviderContract',
 	];
 
+    /**
+     * @return \Nanozen\Providers\Database\DatabaseProvider
+     */
 	protected function db()
 	{
 		return $this->databaseProviderContract;

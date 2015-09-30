@@ -16,6 +16,10 @@ class PageFactory implements FactoryContract
 
 	public static function make($info)
 	{
+        if ($info == false || is_null($info)) {
+            return null;
+        }
+        
 		$id = $info->id;
 		$title = $info->title;
 		$content = $info->content;

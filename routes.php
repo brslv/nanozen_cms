@@ -23,3 +23,5 @@ $router->post('pages', 'PagesController@store');
 
 $router->get('pages/{id:i}/edit', 'PagesController@edit');
 $router->put('pages/{id:i}', 'PagesController@update');
+
+$router->delete('pages/{id:i}/delete', 'PagesController@delete');

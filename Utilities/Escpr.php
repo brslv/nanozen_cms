@@ -22,8 +22,7 @@ class Escpr
 	public static function escape(&$thisThing) 
 	{
 		if (is_string($thisThing)) {
-			htmlspecialchars($thisThing);
-			return;
+			return htmlspecialchars($thisThing);
 		}
 
 		if (is_array($thisThing)) {

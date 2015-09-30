@@ -8,9 +8,15 @@
 					<li><a href="/pages/create">Add new page</a></li>
 					<li role="separator" class="divider"></li>
 					<li class="dropdown-header">Select page to edit:</li>
-					<?php foreach ($pages as $pageInMenu) : ?>
-						<li><a href=<?= '/pages/' . $pageInMenu->getId() . '/edit' ?>><?= $pageInMenu->getTitle(); ?></a></li>	
-					<?php endforeach; ?>
+					<?php if (count($pages) > 0) : ?>
+                        <?php foreach ($pages as $pageInMenu) : ?>
+                            <li>
+                                <a href=<?= '/pages/' . $pageInMenu->getId() . '/edit' ?>><?= $pageInMenu->getTitle(); ?></a>
+                            </li>	
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                            <p style="padding-left: 15px;">No pages to show.</p>
+                    <?php endif; ?>
 				</ul>
 			</li>
 

@@ -18,7 +18,7 @@ class FormBuilder implements FormBuilderContract
 	use GeneratesCsrfTokenSignature;
 	use GeneratesHttpMethodSignature;
 
-	public static function build($action, $method, array $attributes = null) 
+	public static function build($action, $method, array $attributes = null, $csrf = true) 
 	{
 		$method = strtoupper($method);
 		$form = sprintf('<form action="%s" method="POST"', $action);
@@ -32,9 +32,11 @@ class FormBuilder implements FormBuilderContract
 		} elseif ($method != 'GET') {
 			$form .= static::generateHttpMethodSignature($method);
 		}
-
-		$form .= static::generateCsrfTokenField();
-
+        
+        if ($csrf) {
+            $form .= static::generateCsrfTokenField();
+        }
+            
 		return $form;
 	}
 

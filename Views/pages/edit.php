@@ -7,14 +7,17 @@
 
 <main class="app-main">
 	<div class="container">
-
+        
 		<h2>Edit page: <strong><?= $page->getTitle(); ?></strong></h2>
 		
 		<hr />
 
 		<?php include_once app_flash(); ?>
+        <?php $csrf = Form::csrfToken(); ?>
 
-		<?= Form::start('/pages', 'PUT'); ?>
+		<?= Form::start('/pages/' . $page->getId(), 'PUT', null, false); ?>
+            <?= Form::hidden('_token', $csrf); ?>
+        
 			<div class="form-group">
 				<?= Form::text('title', ['value' => $page->getTitle(), 'class' => 'form-control']); ?>
 			</div>
@@ -31,6 +34,16 @@
 				<?= Form::submit('editPageButton', 'Edit', ['class' => 'btn btn-success']); ?>
 			</div>
 		<?= Form::stop(); ?>
+        
+        <?= Form::start('/pages/' . $page->getId() . '/delete', 'DELETE', null, false) ?>
+        
+            <?= Form::hidden('_token', $csrf); ?>
+        
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">Delete</button>
+			</div>
+        
+        <?= Form::stop() ?>
 
 	</div>
 </main>
