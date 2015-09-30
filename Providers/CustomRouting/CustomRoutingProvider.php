@@ -27,9 +27,8 @@ class CustomRoutingProvider extends RoutingProvider implements CustomRoutingProv
     }
 
     public function invoke()
-    {
+    {;
         $target = $this->match();
-
         // Call the target controller/action
         // or perform the target closure.
         //

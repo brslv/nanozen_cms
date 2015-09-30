@@ -35,8 +35,12 @@
 					Blocks <span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="">Add block</a></li>
-					<li><a href="">Manage blocks</a></li>
+                    <?php foreach ($blockTypesTitles as $bt) : ?>
+                    
+                        <?php $blockTitle = str_replace('_', '-', $bt['title']); ?>
+                    
+                        <li><a href="/blocks/<?= $blockTitle ?>/create">Add new <?= $blockTitle; ?></a></li>
+                    <?php endforeach; ?>
 				</ul>
 			</li>
 

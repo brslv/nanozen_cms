@@ -26,6 +26,7 @@ class ViewCommonDataProvider
 		$this->loadAppDescription();
 		$this->loadAllPages();
         $this->loadAllActivePages();
+        $this->loadBlockTypesTitles();
 		
 		// Return logic, nothing fancy, leave it as is:
 		if (is_null($this->commonData)) {
@@ -118,6 +119,12 @@ class ViewCommonDataProvider
 		}
         
         return $pagesObjectsArray;
+    }
+    
+    private function loadBlockTypesTitles()
+    {
+        $this->commonData['blockTypesTitles'] = 
+                $this->db()->query("SELECT title FROM block_types")->fetch(\PDO::FETCH_ASSOC);
     }
 	
 

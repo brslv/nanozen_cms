@@ -11,6 +11,12 @@ namespace Nanozen\Models;
 class Block
 {
     
+    const BLOCK_TYPE_FORM = 'form';
+    
+    const BLOCK_TYPE_CONTENT_BOX = 'content-box';
+    
+    const BLOCK_TYPE_GRID = 'grid';
+    
     private $id;
     
     private $title;
