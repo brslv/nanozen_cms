@@ -55,7 +55,7 @@ class PagesController extends BaseController
 	{
 		Redirect::guests('/');
 
-        $page = $this->pageRepository->find(['id' => $id]);
+        $page = $this->pageRepository->find(['id' => $id], false);
         
         if (is_null($page)) {
             http_response_code(404);
@@ -74,16 +74,26 @@ class PagesController extends BaseController
     {
         Redirect::guests('/');
         
-        echo "This will update page.";
+        $result = $this->pageRepository->update($id, $this->binding);
+        
+        if ( ! $result) {
+            Redirect::loggedUser('/pages/' . $id . '/edit');
+        }
+        
+        Redirect::loggedUser('/back');
     }
     
     public function delete($id) 
     {
         Redirect::guests('/');
         
-        $this->pageRepository->remove($id);
+        $result = $this->pageRepository->remove($id);
         
-        Redirect::to('/back');
+        if ( ! $result) {
+            Redirect::loggedUser('/pages/' . $id . '/edit');
+        }
+        
+        Redirect::loggedUser('/back');
     }
 
 }

@@ -18,7 +18,9 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="/">Home</a></li>
+                    <?php foreach ($activePages as $page) : ?>
+                        <li><a href="/"><?= $page->getTitle(); ?></a></li>
+                    <?php endforeach; ?>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

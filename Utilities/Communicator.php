@@ -30,5 +30,9 @@ class Communicator
     const PAGE_DOES_NOT_EXIST = 'Page does not exist';
     
     const PAGE_SUCCESSFULLY_DELETED = 'Page successfully deleted.';
+    
+    const PAGE_SUCCESSFULLY_EDITED = 'Page successfully edited';
+    
+    const PAGE_EDITING_FAIL = 'Page editing failed. Please try again.';
 	
 }

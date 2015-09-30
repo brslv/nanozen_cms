@@ -7,6 +7,7 @@ use Nanozen\Utilities\Validator;
 use Nanozen\Factories\PageFactory;
 use Nanozen\Utilities\Communicator;
 use Nanozen\Models\Binding\StorePageBinding;
+use Nanozen\Models\Binding\UpdatePageBinding;
 use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Contracts\Repositories\PageRepositoryContract;
 
@@ -19,9 +20,9 @@ use Nanozen\Contracts\Repositories\PageRepositoryContract;
 class PageRepository extends BaseRepository implements PageRepositoryContract
 {
 
-    const ACTIVE_PAGE_FLAG = 1;
+    const ACTIVE_PAGE_FLAG = 'active = 1 ';
     
-    const INACTIVE_PAGE_FLAG = 0;
+    const INACTIVE_PAGE_FLAG = 'active = 0 ';
     
 	public function save(StorePageBinding $page)
 	{
@@ -49,10 +50,10 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
     
     public function all($onlyActive = true) 
     {
-        $query = "SELECT id, title, content, active, deleted_on FROM pages";
+        $query = "SELECT id, title, content, active, deleted_on FROM pages WHERE deleted_on IS NULL ";
         
         if ($onlyActive) {
-            $query .= " WHERE active = 1";
+            $query .= "AND " . self::ACTIVE_PAGE_FLAG;
         }
         
         $pages = $this->db()->query($query)->fetch();
@@ -68,11 +69,13 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 	 */
 	public function find(array $params, $onlyActive = true) 
 	{
+        // TODO: use the active field for hiding pages and deleted_on for deleting pages.
+        
 		if (empty($params)) {
 			throw new \Exception('Params cannot be empty.');
 		}
 
-		$query = $this->constructQuery($params);
+		$query = $this->constructQuery($params, $onlyActive);
 		$executableArray = $this->constructExecutableArray($params);
 
 		$stmt = $this->db()->prepare($query);
@@ -97,7 +100,11 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 			}
 		}
         
-        $query .= sprintf(" AND active = %s", $onlyActive ? self::ACTIVE_PAGE_FLAG : self::INACTIVE_PAGE_FLAG);
+        $query .= ' AND deleted_on IS NULL';
+        
+        if ($onlyActive) {
+            $query .= sprintf(" AND %s", self::ACTIVE_PAGE_FLAG);
+        }
 
 		return $query;
 	}
@@ -115,7 +122,7 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
     
     public function remove($id)
     {
-        $page = $this->find(['id' => $id]);
+        $page = $this->find(['id' => $id], false);
         
         if ($page) {
             $stmt = $this->db()->prepare(
@@ -131,9 +138,34 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
                 Session::flash('flash_messages', Communicator::PAGE_SUCCESSFULLY_DELETED);
                 return true;
             }
-        } else {
-            Session::flash('flash_messages', Communicator::PAGE_DOES_NOT_EXIST);
         }
+        
+        Session::flash('flash_messages', Communicator::PAGE_DOES_NOT_EXIST);
+        return false;
+    }
+    
+    public function update($id, UpdatePageBinding $page)
+    {
+        if ( ! Validator::validatePageCreationInformation($page)) return; // TODO: validatePageUpdateInformation().
+        
+        $query = "UPDATE pages"
+                . " SET title = :title, content = :content, active = :active"
+                . " WHERE id = :id";
+        $stmt = $this->db()->prepare($query);
+        $result = $stmt->execute([
+            ':title' => $page->title,
+            ':content' => $page->content,
+            ':active' => $page->active,
+            ':id' => $id,
+        ]);
+        
+        if ($result) {
+            Session::flash('flash_messages', Communicator::PAGE_SUCCESSFULLY_EDITED);
+            return true;
+        }
+        
+        Session::flash('flash_messages', Communicator::PAGE_EDITING_FAIL);
+        return false;
     }
 
 }

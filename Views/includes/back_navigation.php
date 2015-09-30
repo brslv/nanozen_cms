@@ -8,10 +8,20 @@
 					<li><a href="/pages/create">Add new page</a></li>
 					<li role="separator" class="divider"></li>
 					<li class="dropdown-header">Select page to edit:</li>
-					<?php if (count($pages) > 0) : ?>
-                        <?php foreach ($pages as $pageInMenu) : ?>
+					<?php if (count($allPages) > 0) : ?>
+                        <?php foreach ($allPages as $pageInMenu) : ?>
                             <li>
-                                <a href=<?= '/pages/' . $pageInMenu->getId() . '/edit' ?>><?= $pageInMenu->getTitle(); ?></a>
+                                <a href=<?= '/pages/' . $pageInMenu->getId() . '/edit' ?>>
+                                    <?php if ( ! $pageInMenu->getActive()) : ?>
+                                        &mdash;&nbsp;
+                                    <?php endif; ?>
+                                    
+                                    <?= $pageInMenu->getTitle(); ?>
+                                        
+                                    <?php if ( ! $pageInMenu->getActive()) : ?>
+                                        &mdash;&nbsp;
+                                    <?php endif; ?>
+                                </a>
                             </li>	
                         <?php endforeach; ?>
                     <?php else : ?>

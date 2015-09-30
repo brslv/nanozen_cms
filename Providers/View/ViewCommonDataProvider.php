@@ -25,6 +25,7 @@ class ViewCommonDataProvider
 		$this->loadAppTitle();
 		$this->loadAppDescription();
 		$this->loadAllPages();
+        $this->loadAllActivePages();
 		
 		// Return logic, nothing fancy, leave it as is:
 		if (is_null($this->commonData)) {
@@ -86,18 +87,38 @@ class ViewCommonDataProvider
 		$this->commonData['appDescription'] = $appDescription;
 	}
 
+    /**
+     * Loads all pages - active and inactive (hidden/visible).
+     */
 	private function loadAllPages()
 	{
+        $pagesObjectsArray = $this->getPagesByActiveStatus(false);
+
+		$this->commonData['allPages'] = $pagesObjectsArray;
+	}
+    
+    /**
+     * Loads only active pages (visible).
+     */
+    private function loadAllActivePages()
+    {
+        $pagesObjectsArray = $this->getPagesByActiveStatus(true);
+
+		$this->commonData['activePages'] = $pagesObjectsArray;
+    }
+    
+    private function getPagesByActiveStatus($active = false)
+    {
         $pagesRepository = Injector::call('\Nanozen\Repositories\PageRepository');
-		$pages = $pagesRepository->all();
+		$pages = $pagesRepository->all($active);
 		$pagesObjectsArray = [];
 
 		foreach ($pages as $page) {
 			$pagesObjectsArray[] = PageFactory::make($page);
 		}
-
-		$this->commonData['pages'] = $pagesObjectsArray;
-	}
+        
+        return $pagesObjectsArray;
+    }
 	
 
 }
