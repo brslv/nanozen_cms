@@ -11,7 +11,7 @@ namespace Nanozen\Contracts\Repositories;
 interface BlockRepositoryContract 
 {
 
-    function save(StoreBlockBinding $user);
+    function save($block);
 
 	function find(array $params);
 

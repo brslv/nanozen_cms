@@ -167,5 +167,10 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
         Session::flash('flash_messages', Communicator::PAGE_EDITING_FAIL);
         return false;
     }
+    
+    public function getRegions()
+    {
+        return $this->db()->query("SELECT id, region, description FROM regions")->fetch(\PDO::FETCH_ASSOC);
+    }
 
 }

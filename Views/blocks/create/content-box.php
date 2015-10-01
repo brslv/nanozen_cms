@@ -11,8 +11,66 @@
 		<h2>Create block of type <strong>content-box</strong></h2>
 		
 		<hr />
+        
+        <?php include_once app_flash() ?>
 
-        <p>A form for creating content-box.</p>
+        <?= Form::start('/blocks/store/content-box', 'POST'); ?>
+        
+            <?= Form::hidden('blockTypeId', 2) ?>
+        
+            <div class="form-group">
+                <?= Form::text('title', ['class' => 'form-control', 'placeholder' => 'Block title']); ?>
+            </div>
+        
+            <div class="form-group">
+                <?= Form::text('description', ['class' => 'form-control', 'placeholder' => 'Short description']); ?>
+            </div>
+        
+            <div class="form-group">
+                <?= Form::textarea('content', ['class' => 'form-control', 'placeholder' => 'Content']); ?>
+            </div>
+        
+            <div class="form-group">
+                <lable class="form-control-static" for="pageId">Attach to page: </lable>
+            </div>
+        
+            <div class="form-group">
+                <?php 
+                
+                    $dropdownOptions = [];
+                
+                    foreach ($allPages as $pageInDropdown) {
+                        $dropdownOptions[$pageInDropdown->getId()] = $pageInDropdown->getTitle();
+                    }
+                
+                ?>
+                
+                <?= Form::dropdown('pageId', $dropdownOptions, ['class' => 'form-control']) ?>
+            </div>
+        
+            <div class="form-group">
+                <lable class="form-control-static" for="region">Region: </lable>
+            </div>
+        
+            <div class="form-group">
+                <?php 
+                
+                    $regionOptions = [];
+                
+                    foreach ($regions as $region) {
+                        $regionOptions[$region['region']] = $region['description'];
+                    }
+                
+                ?>
+                
+                <?= Form::dropdown('region', $regionOptions, ['class' => 'form-control']) ?>
+            </div>
+        
+            <div class="form-group">
+                <?= Form::submit('createContentBox', 'Add', ['class' => 'btn btn-success']); ?>
+            </div>
+        
+        <?= Form::stop(); ?>
 
 	</div>
 </main>

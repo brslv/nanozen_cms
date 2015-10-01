@@ -4,6 +4,7 @@ namespace Nanozen\Providers\View;
 
 use Nanozen\App\Injector;
 use Nanozen\Factories\PageFactory;
+use Nanozen\Factories\BlockFactory;
 
 /**
  * Class ViewCommonDataProvider
@@ -26,6 +27,8 @@ class ViewCommonDataProvider
 		$this->loadAppDescription();
 		$this->loadAllPages();
         $this->loadAllActivePages();
+        $this->loadAllBlocks();
+        $this->loadAllActiveBlocks();
         $this->loadBlockTypesTitles();
 		
 		// Return logic, nothing fancy, leave it as is:
@@ -121,11 +124,43 @@ class ViewCommonDataProvider
         return $pagesObjectsArray;
     }
     
+    /**
+     * Loads all blocks - active and inactive (hidden/visible).
+     */
+	private function loadAllBlocks()
+	{
+        $blocksObjectsArray = $this->getBlocksByActiveStatus(false);
+
+		$this->commonData['allBlocks'] = $blocksObjectsArray;
+	}
+    
+    /**
+     * Loads only active blocks (visible).
+     */
+    private function loadAllActiveBlocks()
+    {
+        $blocksObjectsArray = $this->getBlocksByActiveStatus(true);
+
+		$this->commonData['activeBlocks'] = $blocksObjectsArray;
+    }
+	
+    private function getBlocksByActiveStatus($active = false)
+    {
+        $blocksRepository = Injector::call('\Nanozen\Repositories\BlockRepository');
+		$blocks = $blocksRepository->all($active);
+		$blocksRepository = [];
+
+		foreach ($blocks as $block) {
+			$blocksRepository[] = BlockFactory::make($block);
+		}
+        
+        return $blocksRepository;
+    }
+    
     private function loadBlockTypesTitles()
     {
         $this->commonData['blockTypesTitles'] = 
                 $this->db()->query("SELECT title FROM block_types")->fetch(\PDO::FETCH_ASSOC);
     }
-	
 
 }

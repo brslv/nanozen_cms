@@ -1,6 +1,6 @@
 <?php
 
-namespace Nanozen\Contracts\Factories;
+namespace Nanozen\Factories;
 
 use Nanozen\Models\Block;
 use Nanozen\Contracts\Factories\FactoryContract;
@@ -13,6 +13,8 @@ use Nanozen\Contracts\Factories\FactoryContract;
  */
 class BlockFactory implements FactoryContract
 {
+    const DEFAULT_BLOCK_ACTIVE = 1;
+    
     public static function make($info)
     {
         if ($info == false || is_null($info)) {
@@ -23,12 +25,12 @@ class BlockFactory implements FactoryContract
 		$title = $info->title;
         $description = $info->description;
 		$content = $info->content;
-        $blockTypeId = $info->blockTypeId;
-        $pageId = $info->pageId;
+        $blockTypeId = $info->block_type_id;
+        $pageId = $info->page_id;
         $region = $info->region;
-		$active = $info->active;
-		$deletedOn = $info->deleted_on;
-        $hash = $info->hash;
+		$active = isset($info->active) ? $info->active : self::DEFAULT_BLOCK_ACTIVE;
+		$deletedOn = isset($info->deletedOn) ? $info->deletedOn : null;
+        $hash = isset($info->hash) ? $info->hash : null;
         
         return new Block(
                 $id, 

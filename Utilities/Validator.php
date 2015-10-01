@@ -5,6 +5,7 @@ namespace Nanozen\Utilities;
 use Nanozen\Models\Binding\StorePageBinding;
 use Nanozen\Models\Binding\UpdatePageBinding;
 use Nanozen\Models\Binding\RegisterUserBinding;
+use Nanozen\Models\Binding\StoreContentBoxBlockBinding;
 use Nanozen\Providers\Session\SessionProvider as Session;
 
 /**
@@ -56,12 +57,47 @@ class Validator
 
 		if ( ! Validator::stringLength($user->email, 5, 255)) {
 			Session::flash('flash_messages', Communicator::INVALID_EMAIL);
+			$valid = false;
 		}
 
 		return $valid;
 	}
+    
+    public static function validateBlockCreationInformation($block)
+    {
+        if (get_class($block) == 'Nanozen\Models\Binding\StoreContentBoxBlockBinding') {
+            return self::validateContentBoxCreationInformation($block);
+        }
+    }
+    
+    private static function validateContentBoxCreationInformation(StoreContentBoxBlockBinding $block)
+    {
+        $valid = true;
+        
+        if ( ! self::stringLength($block->title, 3, 255)) {
+            Session::flash('flash_messages', Communicator::INVALID_BLOCK_TITLE);
+			$valid = false;
+        }
+        
+        if ( ! self::stringLength($block->content, 3, 65000000)) {
+            Session::flash('flash_messages', Communicator::INVALID_BLOCK_CONTENT);
+			$valid = false;
+        }
+        
+        if ( ! self::min($block->blockTypeId, 1)) {
+            Session::flash('flash_messages', Communicator::INVALID_BLOCK_TO_PAGE_ATTACHMENT);
+			$valid = false;
+        }
+        
+        if ( ! self::inRange($block->region, 1, 3)) {
+            Session::flash('flash_messages', Communicator::INVALID_PAGE_REGION);
+			$valid = false;
+        }
+        
+        return $valid;
+    }
 
-	public static function password($password)
+    public static function password($password)
 	{
 		if (empty($password) || $password == '') {
 			return false;
@@ -87,4 +123,9 @@ class Validator
 	{
 		return $number >= $bottom && $number <= $top;
 	}
+    
+    public static function min($number, $min) 
+    {
+        return $number >= $min;
+    }
 }

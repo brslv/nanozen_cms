@@ -18,9 +18,12 @@ class BlocksController extends BaseController
     
     private $blockRepository;
     
+    private $pageRepository;
+    
     public function __construct()
     {
-        $this->constructor = Injector::call('\Nanozen\Repositories\BlockRepository');
+        $this->blockRepository = Injector::call('\Nanozen\Repositories\BlockRepository');
+        $this->pageRepository = Injector::call('\Nanozen\Repositories\PageRepository');
     }
     
     public function create($type)
@@ -38,11 +41,31 @@ class BlocksController extends BaseController
                 $view = 'blocks.create.' . Block::BLOCK_TYPE_GRID;
         }
         
+        $regions = $this->pageRepository->getRegions();
+        
         if ($view != "") {
-            $this->view()->render($view);
+            $this->view()->render($view, compact('regions'));
         }
         
         $this->view()->render('errors.404');
+    }
+    
+    /**
+     * @bind \Nanozen\Models\Binding\StoreContentBoxBlockBinding
+     */
+    public function store($type)
+    {
+        Redirect::guests('/');
+        
+        $blockBinding = $this->binding;
+        
+        $persistedBlock = $this->blockRepository->save($blockBinding);
+        
+        if ($persistedBlock) {
+            Redirect::to('/back');
+        } else {
+			Redirect::to('/blocks/' . $type . '/create');
+		}
     }
     
 }

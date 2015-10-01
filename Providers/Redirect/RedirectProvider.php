@@ -37,4 +37,10 @@ class RedirectProvider implements RedirectProviderContract
 		}
 	}
 
+    public static function refresh()
+    {
+        header("Refresh:0");
+        exit;
+    }
+    
 }

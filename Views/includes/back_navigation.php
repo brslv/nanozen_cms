@@ -41,6 +41,29 @@
                     
                         <li><a href="/blocks/<?= $blockTitle ?>/create">Add new <?= $blockTitle; ?></a></li>
                     <?php endforeach; ?>
+                        
+					<li role="separator" class="divider"></li>
+					<li class="dropdown-header">Select block to edit:</li>
+                    
+                    <?php if (count($allBlocks) > 0) : ?>
+                        <?php foreach ($allBlocks as $blockInMenu) : ?>
+                            <li>
+                                <a href=<?= '/blocks/' . $blockInMenu->getId() . '/edit' ?>>
+                                    <?php if ( ! $blockInMenu->getActive()) : ?>
+                                        &mdash;&nbsp;
+                                    <?php endif; ?>
+                                    
+                                    <?= $blockInMenu->getTitle(); ?>
+                                        
+                                    <?php if ( ! $blockInMenu->getActive()) : ?>
+                                        &mdash;&nbsp;
+                                    <?php endif; ?>
+                                </a>
+                            </li>	
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                            <p style="padding-left: 15px;">No blocks to show.</p>
+                    <?php endif; ?>
 				</ul>
 			</li>
 
