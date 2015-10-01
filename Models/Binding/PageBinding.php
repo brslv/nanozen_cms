@@ -3,12 +3,12 @@
 namespace Nanozen\Models\Binding;
 
 /**
- * Class StorePageBinding
+ * Class PageBinding
  *
  * @author brslv
  * @package Nanozen\Models\Binding 
  */
-class StorePageBinding 
+class PageBinding 
 {
 	
 	public $title;

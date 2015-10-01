@@ -2,10 +2,11 @@
 
 namespace Nanozen\Utilities;
 
+use Nanozen\Models\Binding\PageBinding;
+use Nanozen\Models\Binding\BlockBinding;
 use Nanozen\Models\Binding\StorePageBinding;
 use Nanozen\Models\Binding\UpdatePageBinding;
 use Nanozen\Models\Binding\RegisterUserBinding;
-use Nanozen\Models\Binding\BlockBinding;
 use Nanozen\Providers\Session\SessionProvider as Session;
 
 /**
@@ -19,7 +20,7 @@ class Validator
 
 	const PASSWORD_LENGTH = 6;
 
-	public static function validatePageCreationInformation($page)
+	public static function validatePageCreationInformation(PageBinding $page)
 	{
 		$valid = true;
 

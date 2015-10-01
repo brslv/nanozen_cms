@@ -41,7 +41,7 @@ class PagesController extends BaseController
 	/**
 	 * Stores a page to the database.
 	 *
-	 * @bind \Nanozen\Models\Binding\StorePageBinding
+	 * @bind \Nanozen\Models\Binding\PageBinding
 	 */
 	public function store()
 	{
@@ -74,7 +74,7 @@ class PagesController extends BaseController
 	}
     
     /**
-     * @bind \Nanozen\Models\Binding\UpdatePageBinding
+     * @bind \Nanozen\Models\Binding\PageBinding
      */
     public function update($id) 
     {

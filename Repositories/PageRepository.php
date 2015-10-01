@@ -6,7 +6,7 @@ use Nanozen\Utilities\Escpr;
 use Nanozen\Utilities\Validator;
 use Nanozen\Factories\PageFactory;
 use Nanozen\Utilities\Communicator;
-use Nanozen\Models\Binding\StorePageBinding;
+use Nanozen\Models\Binding\PageBinding;
 use Nanozen\Models\Binding\UpdatePageBinding;
 use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Contracts\Repositories\PageRepositoryContract;
@@ -24,25 +24,25 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
     
     const INACTIVE_PAGE_FLAG = 'active = 0 ';
     
-	public function save(StorePageBinding $page)
+	public function save(PageBinding $page)
 	{
 		if ( ! Validator::validatePageCreationInformation($page)) return;
 
-		$query = "INSERT INTO pages(title, content) VALUES(:title, :content)";
+		$query = "INSERT INTO pages(title, content, active) VALUES(:title, :content, :active)";
 		$stmt = $this->db()->prepare($query);
 		$stmt->execute([
 			':title' => $page->title,
 			':content' => $page->content,
+            ':active' => $page->active,
 		]);
 
 		$id = $this->db()->lastInsertId();
 		$persistedPage = $this->find(['id' => $id]);
-
+        
 		if ($id) {
-            $pageTitle = $persistedPage->getTitle();
-			Session::flash('flash_messages', 'Page "' . Escpr::escape($pageTitle) . '" successfully added.');
+			Session::flash('flash_messages', 'Page successfully added.');
 		} else {
-			Session::flash('flash_messages', 'En error occured. Please try again.');
+			Session::flash('flash_messages', 'An error occured. Please try again.');
 		}
 
 		return $persistedPage;
@@ -74,14 +74,14 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 		if (empty($params)) {
 			throw new \Exception('Params cannot be empty.');
 		}
-
+        
 		$query = $this->constructQuery($params, $onlyActive);
 		$executableArray = $this->constructExecutableArray($params);
 
 		$stmt = $this->db()->prepare($query);
 		$stmt->execute($executableArray);
 		$page = $stmt->fetch(\PDO::FETCH_OBJ, false);
-
+        
 		return PageFactory::make($page);
 	}
 
@@ -144,7 +144,7 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
         return false;
     }
     
-    public function update($id, UpdatePageBinding $page)
+    public function update($id, PageBinding $page)
     {
         if ( ! Validator::validatePageCreationInformation($page)) return; // TODO: validatePageUpdateInformation().
         

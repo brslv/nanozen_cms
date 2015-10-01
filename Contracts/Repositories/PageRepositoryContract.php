@@ -2,7 +2,7 @@
 
 namespace Nanozen\Contracts\Repositories;
 
-use Nanozen\Models\Binding\StorePageBinding;
+use Nanozen\Models\Binding\PageBinding;
 
 /**
  * Interface PageRepositoryContract
@@ -13,7 +13,7 @@ use Nanozen\Models\Binding\StorePageBinding;
 interface PageRepositoryContract 
 {
 	
-	function save(StorePageBinding $page);
+	function save(PageBinding $page);
 
 	function find(array $params);
 
