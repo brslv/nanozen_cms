@@ -3,19 +3,21 @@
 	<?php include_once app_navigation(); ?>
 
 	<main class="app-main">
-		<div class="container">
-            <?php if (isset($blocks) && ! empty($blocks['regionOne'])) : ?>
-                <section class="jumbotron">
+        <?php if (isset($blocks) && ! empty($blocks['regionOne'])) : ?>
+            <section class="jumbotron">
+                <div class="container">
                     <?php foreach ($blocks['regionOne'] as $block) : ?>
-                    
+
                         <p>
                             <?= $block->getContent(); ?>
                         </p>
-                    
+
                     <?php endforeach; ?>
-                </section>
-            <?php endif; ?>
-            
+                </div>
+            </section>
+        <?php endif; ?>
+        
+		<div class="container">
             
             <?php if (isset($blocks) && ! empty($blocks['regionTwo'])) : ?>
                 <section class="app-content-section <?= ! empty($blocks['regionThree']) ? 'col-md-8' : 'col-md-12'; ?>">

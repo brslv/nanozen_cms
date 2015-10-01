@@ -4,7 +4,7 @@
 
 	<main class="app-main">
 		<div class="container">
-			<section class="jumbotron" style="background: url('http://webneel.com/wallpaper/sites/default/files/images/04-2013/15-beach-sea-photography.jpg') no-repeat; background-position: center; background-size: cover;">
+			<section class="jumbotron">
 				<p>
 					Nothing to display in this section.
 				<p>
