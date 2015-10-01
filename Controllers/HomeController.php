@@ -31,12 +31,12 @@ class HomeController extends BaseController
                                ->fetch(\PDO::FETCH_ASSOC, false)['value'];
         
         if (is_numeric($homePageId)) {
-            $homepageExists = $this->pageRepository->find(['id' => $homePageId]);
+            $homepageExists = $this->pageRepository->find(['id' => $homePageId], false);
             
             if ($homepageExists) {
                 $pagesController = Injector::call('\Nanozen\Controllers\PagesController');
             
-                $pagesController->show($homePageId);
+                $pagesController->show($homePageId, false);
             }
         }
         

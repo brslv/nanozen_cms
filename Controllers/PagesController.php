@@ -3,6 +3,7 @@
 namespace Nanozen\Controllers;
 
 use Nanozen\App\Injector;
+use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Providers\Redirect\RedirectProvider as Redirect;
 use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
 
@@ -35,11 +36,11 @@ class PagesController extends BaseController
 		$this->view()->render('pages.create');
 	}
     
-    public function show($id)
+    public function show($id, $active = true)
     {
         $this->view()->escape(false);
         
-        $page = $this->pageRepository->find(['id' => $id]);
+        $page = $this->pageRepository->find(['id' => $id], $active);
         
         if (is_null($page)) {
             http_response_code(404);
@@ -136,6 +137,33 @@ class PagesController extends BaseController
         }
         
         Redirect::loggedUser('/back');
+    }
+    
+    public function setupHomepage()
+    {
+        Redirect::guests('/');
+        
+        $this->view()->render('pages.setupHomepage');
+    }
+    
+    public function postSetupHomepage()
+    {
+        Redirect::guests('/');
+        
+        if (isset($_POST['homepageId'])) {
+            $homepageId = $_POST['homepageId'];
+        } else {
+            Session::flash('flash_messages', 'Something went wrong. Please try again!');
+            Redirect::to('pages/homepage');
+        }
+        
+        $result = $this->pageRepository->setHomepage($homepageId);
+        
+        if ( ! $result) {
+            Redirect::loggedUser('/pages/homepage');
+        }
+        
+        Redirect::to('/');
     }
 
 }

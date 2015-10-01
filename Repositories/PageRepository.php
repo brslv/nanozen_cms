@@ -171,5 +171,25 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
     {
         return $this->db()->query("SELECT id, region, description FROM regions")->fetch(\PDO::FETCH_ASSOC);
     }
+    
+    public function setHomepage($id) 
+    {
+        if ( ! is_numeric($id)) {
+            throw new Exception("Id must be numberic");
+        }
+        
+        $query = "UPDATE options SET value = :value WHERE name = 'app_homepage'";
+        $stmt = $this->db()->prepare($query);
+        $result = $stmt->execute([
+            ':value' => $id,
+        ]);
+        
+        if ($result) {
+            return true;
+        } 
+        
+        Session::flash('flash_messages', Communicator::SET_HOMEPAGE_FAIL);
+        return false;
+    }
 
 }

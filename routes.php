@@ -26,6 +26,8 @@ $router->post('pages', 'PagesController@store');
 $router->get('pages/{id:i}/edit', 'PagesController@edit');
 $router->put('pages/{id:i}', 'PagesController@update');
 $router->delete('pages/{id:i}/delete', 'PagesController@delete');
+$router->get('pages/homepage', 'PagesController@setupHomepage');
+$router->post('pages/homepage', 'PagesController@postSetupHomepage');
 
 // Blocks
 $router->get('blocks/{type:b}/create', 'BlocksController@create');
@@ -33,3 +35,7 @@ $router->post('blocks/store/{type:b}', 'BlocksController@store');
 $router->get('blocks/{id:i}/edit', 'BlocksController@edit');
 $router->put('blocks/{id:i}', 'BlocksController@update');
 $router->delete('blocks/{id:i}/delete', 'BlocksController@delete');
+
+// ========
+// Settings
+// ========

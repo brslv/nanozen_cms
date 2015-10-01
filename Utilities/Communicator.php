@@ -10,7 +10,7 @@ namespace Nanozen\Utilities;
  */
 class Communicator 
 {
-	const ERROR = "An error occured. Please try again.";
+	const ERROR = "An error occured. Please, try again.";
     
 	const INVALID_USERNAME = 'Username length must be in the range [3...60] symbols.';
 
@@ -18,7 +18,7 @@ class Communicator
 
 	const INVALID_EMAIL = 'Email must be in the range [5...255] symbols.';
 
-	const INVALID_CREDENTIALS = 'Invalid credentials. Please try again.';
+	const INVALID_CREDENTIALS = 'Invalid credentials. Please, try again.';
 
 	const SUCCESSFULLY_LOGGED = 'You have successfully logged in.';
 
@@ -48,10 +48,12 @@ class Communicator
     
     const BLOCK_SUCCESSFULLY_EDITED = 'Block successfully edited.';
     
-    const BLOCK_EDITING_FAIL = 'Block editing failed. Please try again.';
+    const BLOCK_EDITING_FAIL = 'Block editing failed. Please, try again.';
     
     const BLOCK_SUCCESSFULLY_DELETED = 'Block successfully deleted.';
     
     const BLOCK_DOES_NOT_EXIST = 'Block does not exist.';
+    
+    const SET_HOMEPAGE_FAIL = 'An error occured while trying to change your homepage. Please, try again.';
 	
 }
