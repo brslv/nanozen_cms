@@ -8,13 +8,17 @@
 <main class="app-main">
 	<div class="container">
         
-		<h2>Edit block</h2>
+		<h2>Edit block <?= $block->getTitle(); ?></h2>
 		
 		<hr />
         
         <?php include_once app_flash() ?>
 
-        <?= Form::start('/blocks/' . $block->getId(), 'PUT'); ?>
+        <?php $csrf = Form::csrfToken(); ?>
+        
+        <?= Form::start('/blocks/' . $block->getId(), 'PUT', null, false); ?>
+        
+            <?= Form::hidden('_token', $csrf); ?>
         
             <?= Form::hidden('blockTypeId', 2) ?>
         
@@ -67,10 +71,28 @@
             </div>
         
             <div class="form-group">
+                <lable class="form-control-static" for="region">Block status: </lable>
+            </div>
+        
+            <div class="form-group">
+				<?= Form::dropdown('active', [1 => 'Visible', 0 => 'Hidden'], ['class' => 'form-control'], $block->getActive()); ?>
+			</div>
+            
+            <div class="form-group">
                 <?= Form::submit('editContentBox', 'Edit', ['class' => 'btn btn-success']); ?>
             </div>
         
         <?= Form::stop(); ?>
+        
+        <?= Form::start('/blocks/' . $block->getId() . '/delete', 'DELETE', null, false) ?>
+        
+            <?= Form::hidden('_token', $csrf); ?>
+        
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">Delete</button>
+			</div>
+        
+        <?= Form::stop() ?>
 
 	</div>
 </main>

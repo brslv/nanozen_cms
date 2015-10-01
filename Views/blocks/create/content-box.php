@@ -65,6 +65,14 @@
                 
                 <?= Form::dropdown('region', $regionOptions, ['class' => 'form-control']) ?>
             </div>
+            
+            <div class="form-group">
+                <lable class="form-control-static" for="region">Block status: </lable>
+            </div>
+        
+            <div class="form-group">
+				<?= Form::dropdown('active', [1 => 'Visible', 0 => 'Hidden'], ['class' => 'form-control']); ?>
+			</div>
         
             <div class="form-group">
                 <?= Form::submit('createContentBox', 'Add', ['class' => 'btn btn-success']); ?>

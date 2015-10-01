@@ -42,8 +42,8 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
     {   
         if ( ! Validator::validateBlockCreationInformation($block)) return;
         
-        $blocksColumns = 'title, description, content, block_type_id, page_id, region';
-        $values = ':title, :description, :content, :block_type_id, :page_id, :region';
+        $blocksColumns = 'title, description, content, block_type_id, page_id, region, active';
+        $values = ':title, :description, :content, :block_type_id, :page_id, :region, :active';
         $query = "INSERT INTO blocks({$blocksColumns}) VALUES({$values})";
 		$stmt = $this->db()->prepare($query);
 		$stmt->execute([
@@ -53,6 +53,7 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
             ':block_type_id' => $block->blockTypeId,
             ':page_id' => $block->pageId,
             ':region' => $block->region,
+            ':active' => $block->active,
 		]);
 
 		$id = $this->db()->lastInsertId();        
@@ -118,6 +119,30 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
 
 		return $executableArray;
 	}
+    
+    public function remove($id)
+    {
+        $block = $this->find(['id' => $id], false);
+        
+        if ($block) {
+            $stmt = $this->db()->prepare(
+                    "UPDATE blocks SET active = :active, deleted_on = :deleted_on WHERE id = :id");
+            
+            $result = $stmt->execute([
+                ':active' => 0,
+                ':deleted_on' => (new \DateTime())->format('Y-m-d H:i:s'),
+                ':id' => $block->getId(),
+            ]);
+            
+            if ($result) {
+                Session::flash('flash_messages', Communicator::BLOCK_SUCCESSFULLY_DELETED);
+                return true;
+            }
+        }
+        
+        Session::flash('flash_messages', Communicator::BLOCK_DOES_NOT_EXIST);
+        return false;
+    }
     
     public function update($id, \Nanozen\Models\Binding\StoreContentBoxBlockBinding $block)
     {

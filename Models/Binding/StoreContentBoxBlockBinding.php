@@ -23,4 +23,6 @@ class StoreContentBoxBlockBinding
     
     public $blockTypeId;
     
+    public $active;
+    
 }

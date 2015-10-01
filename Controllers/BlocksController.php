@@ -117,4 +117,17 @@ class BlocksController extends BaseController
         
         Redirect::loggedUser('/back');
     }
+    
+    public function delete($id) 
+    {
+        Redirect::guests('/');
+        
+        $result = $this->blockRepository->remove($id);
+        
+        if ( ! $result) {
+            Redirect::loggedUser('/blocks/' . $id . '/edit');
+        }
+        
+        Redirect::loggedUser('/back');
+    }
 }

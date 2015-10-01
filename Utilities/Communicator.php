@@ -49,5 +49,9 @@ class Communicator
     const BLOCK_SUCCESSFULLY_EDITED = 'Block successfully edited.';
     
     const BLOCK_EDITING_FAIL = 'Block editing failed. Please try again.';
+    
+    const BLOCK_SUCCESSFULLY_DELETED = 'Block successfully deleted.';
+    
+    const BLOCK_DOES_NOT_EXIST = 'Block does not exist.';
 	
 }
