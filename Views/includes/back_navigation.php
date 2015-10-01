@@ -11,6 +11,7 @@
 					<li><a href="/pages/create">Add new page</a></li>
 					<li role="separator" class="divider"></li>
 					<li class="dropdown-header">Select other pages to edit:</li>
+					<li role="separator" class="divider"></li>
 					
                     <?php if (count($allPages) > 0) : ?>
                         <?php foreach ($allPages as $pageInMenu) : ?>
@@ -45,25 +46,41 @@
                     
                         <li><a href="/blocks/<?= $blockTitle ?>/create">Add new <?= $blockTitle; ?></a></li>
                     <?php endforeach; ?>
-                        
-					<li role="separator" class="divider"></li>
-					<li class="dropdown-header">Select block to edit:</li>
                     
                     <?php if (count($allBlocks) > 0) : ?>
+                    	<?php  
+	                    	usort($allBlocks, function ($a, $b) {
+				    	        return strcasecmp($a->getPageTitle(), $b->getPageTitle());  
+					        });
+
+                    		$previousPageTitle = $allBlocks[0]->getPageTitle();
+							$itterations = 0;
+                    	?>
                         <?php foreach ($allBlocks as $blockInMenu) : ?>
+
+                        	<?php if ($previousPageTitle != $blockInMenu->getPageTitle() || $itterations == 0) : ?>
+                        		<li role="separator" class="divider"></li>
+                        		<li class="dropdown-header"><?= $blockInMenu->getPageTitle() ?></li>
+                        		<li role="separator" class="divider"></li>
+                        	<?php endif; ?>
+
                             <li>
                                 <a href=<?= '/blocks/' . $blockInMenu->getId() . '/edit' ?>>
                                     <?php if ( ! $blockInMenu->getActive()) : ?>
                                         &mdash;&nbsp;
                                     <?php endif; ?>
                                     
-                                    <?= $blockInMenu->getPageTitle() . ' &bull; ' .$blockInMenu->getTitle(); ?>
+                                    <?= $blockInMenu->getTitle(); ?>
                                         
                                     <?php if ( ! $blockInMenu->getActive()) : ?>
                                         &mdash;&nbsp;
                                     <?php endif; ?>
                                 </a>
-                            </li>	
+                            </li>
+                            <?php
+                            	$itterations++; 
+                            	$previousPageTitle = $blockInMenu->getPageTitle();
+                            ?>
                         <?php endforeach; ?>
                     <?php else : ?>
                             <p style="padding-left: 15px;">No blocks to show.</p>

@@ -91,7 +91,7 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
             foreach ($block as $b) {
                 $blocks[] = BlockFactory::make($b);
             }
-            
+
             return $blocks;
         }
         
