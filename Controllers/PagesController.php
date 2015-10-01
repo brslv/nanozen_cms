@@ -41,6 +41,11 @@ class PagesController extends BaseController
         
         $page = $this->pageRepository->find(['id' => $id]);
         
+        if (is_null($page)) {
+            http_response_code(404);
+            $this->view()->render('errors.404');
+        }
+        
         $regionOneBlocks = $this->blockRepository->find([
             'page_id' => $page->getId(),
             'region' => 1,
