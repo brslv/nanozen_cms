@@ -29,11 +29,6 @@ class Validator
 			$valid = false;
 		}
 
-		if ( ! Validator::stringLength($page->content, 3, 65000)) {
-			Session::flash('flash_messages', Communicator::INVALID_PAGE_CONTENT);
-			$valid = false;
-		}
-
 		if ( ! Validator::inRange($page->active, 0, 1)) {
 			Session::flash('flash_messages', Communicator::INVALID_PAGE_ACTIVE_STATUS);
 			$valid = false;

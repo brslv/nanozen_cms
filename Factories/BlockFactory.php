@@ -16,7 +16,7 @@ class BlockFactory implements FactoryContract
     const DEFAULT_BLOCK_ACTIVE = 1;
     
     public static function make($info)
-    {
+    {   
         if ($info == false || is_null($info)) {
             return null;
         }
@@ -27,6 +27,7 @@ class BlockFactory implements FactoryContract
 		$content = $info->content;
         $blockTypeId = $info->block_type_id;
         $pageId = $info->page_id;
+        $pageTitle = $info->page_title;
         $region = $info->region;
 		$active = isset($info->active) ? $info->active : self::DEFAULT_BLOCK_ACTIVE;
 		$deletedOn = isset($info->deletedOn) ? $info->deletedOn : null;
@@ -39,6 +40,7 @@ class BlockFactory implements FactoryContract
                 $content, 
                 $blockTypeId, 
                 $pageId, 
+                $pageTitle,
                 $region, 
                 $active, 
                 $deletedOn, 

@@ -22,11 +22,10 @@ class PageFactory implements FactoryContract
         
 		$id = $info->id;
 		$title = $info->title;
-		$content = $info->content;
 		$active = $info->active;
 		$deletedOn = $info->deleted_on;
 
-		return new Page($id, $title, $content, $active, $deletedOn);
+		return new Page($id, $title, $active, $deletedOn);
 	}
 
 }

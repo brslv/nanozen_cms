@@ -22,10 +22,12 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
 
     public function all($onlyActive = true) 
     {
-        $query = "SELECT id, title, description, content, block_type_id, page_id, region, active, deleted_on, hash FROM blocks WHERE deleted_on IS NULL ";
+        $query = "SELECT blocks.id, blocks.title, blocks.description, blocks.content, block_type_id, page_id, region, blocks.active, blocks.deleted_on, blocks.hash, pages.title as page_title FROM blocks "
+                . "INNER JOIN pages ON pages.id = blocks.page_id "
+                . "WHERE blocks.deleted_on IS NULL ";
         
         if ($onlyActive) {
-            $query .= "AND " . self::ACTIVE_BLOCK_FLAG;
+            $query .= "AND blocks." . self::ACTIVE_BLOCK_FLAG;
         }
         
         $blocks = $this->db()->query($query)->fetch();
@@ -68,7 +70,7 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
 		return $persistedBlock;
     }
     
-	public function find(array $params, $onlyActive = true) 
+	public function find(array $params, $onlyActive = true, $all = false) 
 	{
         
 		if (empty($params)) {
@@ -76,34 +78,47 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
 		}
 
 		$query = $this->constructQuery($params, $onlyActive);
+        
 		$executableArray = $this->constructExecutableArray($params);
 
 		$stmt = $this->db()->prepare($query);
 		$stmt->execute($executableArray);
-		$block = $stmt->fetch(\PDO::FETCH_OBJ, false);
+		$block = $stmt->fetch(\PDO::FETCH_OBJ, $all);
 
+        if ($all) {
+            $blocks = [];
+            
+            foreach ($block as $b) {
+                $blocks[] = BlockFactory::make($b);
+            }
+            
+            return $blocks;
+        }
+        
 		return BlockFactory::make($block);
 	}
 
 	private function constructQuery($params, $onlyActive = true) 
 	{
-		$query = "SELECT id, title, description, content, block_type_id, page_id, region, active, deleted_on, hash FROM blocks WHERE ";
+		$query = "SELECT blocks.id, blocks.title, blocks.description, blocks.content, block_type_id, page_id, region, blocks.active, blocks.deleted_on, blocks.hash, pages.title as page_title FROM blocks "
+                . "INNER JOIN pages ON pages.id = blocks.page_id "
+                . "WHERE ";
 		$counter = 0;
 		$paramsCount = count($params);
 
 		foreach ($params as $key => $value) {
 			$counter++;
-			$query .= $key . ' = :' . $key;	
+			$query .= 'blocks.' . $key . ' = :' . $key;	
 
 			if ($counter == $paramsCount - 1) {
-				$query .= ', ';
+				$query .= ' AND ';
 			}
 		}
         
-        $query .= ' AND deleted_on IS NULL';
+        $query .= ' AND blocks.deleted_on IS NULL';
         
         if ($onlyActive) {
-            $query .= sprintf(" AND %s", self::ACTIVE_BLOCK_FLAG);
+            $query .= sprintf(" AND blocks.%s", self::ACTIVE_BLOCK_FLAG);
         }
 
 		return $query;

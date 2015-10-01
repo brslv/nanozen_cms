@@ -15,17 +15,14 @@ class Page
 
     private $title;
 
-    private $content;
-
     private $active;
 
     private $deletedOn;
 
-    public function __construct($id, $title, $content, $active, $deletedOn)
+    public function __construct($id, $title, $active, $deletedOn)
     {
         $this->id = $id;
         $this->title = $title;
-        $this->content = $content;
         $this->active = $active;
         $this->deletedOn = $deletedOn; 
     }
@@ -38,11 +35,6 @@ class Page
     public function getTitle()
     {
         return $this->title;
-    }
-
-    public function getContent()
-    {
-        return $this->content;
     }
 
     public function getActive()

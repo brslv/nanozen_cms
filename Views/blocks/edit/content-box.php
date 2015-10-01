@@ -8,7 +8,7 @@
 <main class="app-main">
 	<div class="container">
         
-        <h2>Edit block <strong><?= $block->getTitle(); ?></strong> (content-box)</h2>
+        <h2>Edit block <strong><?= $block->getPageTitle() . ' &bull; ' . $block->getTitle(); ?></strong> (content-box)</h2>
 		
 		<hr />
         

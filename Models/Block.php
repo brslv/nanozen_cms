@@ -29,6 +29,8 @@ class Block
     
     private $pageId;
     
+    private $pageTitle;
+    
     private $region;
     
     private $active;
@@ -44,6 +46,7 @@ class Block
             $content, 
             $blockTypeId, 
             $pageId, 
+            $pageTitle,
             $region, 
             $active, 
             $deletedOn, 
@@ -55,6 +58,7 @@ class Block
         $this->content = $content;
         $this->blockTypeId = $blockTypeId;
         $this->pageId = $pageId;
+        $this->pageTitle = $pageTitle;
         $this->region = $region;
         $this->active = $active;
         $this->deletedOn = $deletedOn;
@@ -100,6 +104,11 @@ class Block
         if ($this->getBlockTypeId() == 3) {
             return self::BLOCK_TYPE_GRID;
         }
+    }
+    
+    public function getPageTitle()
+    {
+        return $this->pageTitle;
     }
 
     public function getPageId()

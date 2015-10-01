@@ -5,10 +5,14 @@
 					Pages <span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
+					<li><a href="/pages/create">Edit the homepage</a></li>
+					<li role="separator" class="divider"></li>
+                    
 					<li><a href="/pages/create">Add new page</a></li>
 					<li role="separator" class="divider"></li>
-					<li class="dropdown-header">Select page to edit:</li>
-					<?php if (count($allPages) > 0) : ?>
+					<li class="dropdown-header">Select other pages to edit:</li>
+					
+                    <?php if (count($allPages) > 0) : ?>
                         <?php foreach ($allPages as $pageInMenu) : ?>
                             <li>
                                 <a href=<?= '/pages/' . $pageInMenu->getId() . '/edit' ?>>
@@ -53,7 +57,7 @@
                                         &mdash;&nbsp;
                                     <?php endif; ?>
                                     
-                                    <?= $blockInMenu->getTitle(); ?>
+                                    <?= $blockInMenu->getPageTitle() . ' &bull; ' .$blockInMenu->getTitle(); ?>
                                         
                                     <?php if ( ! $blockInMenu->getActive()) : ?>
                                         &mdash;&nbsp;
@@ -84,6 +88,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="">Site title</a></li>
 					<li><a href="">Site description</a></li>
+					<li><a href="">Change background</a></li>
 				</ul>
 			</li>
 

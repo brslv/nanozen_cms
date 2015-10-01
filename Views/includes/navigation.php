@@ -19,7 +19,7 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
                     <?php foreach ($activePages as $pageInPublicMenu) : ?>
-                        <li><a href="/"><?= $pageInPublicMenu->getTitle(); ?></a></li>
+                        <li><a href="/pages/<?= $pageInPublicMenu->getId() ?>"><?= $pageInPublicMenu->getTitle(); ?></a></li>
                     <?php endforeach; ?>
 				</ul>
 

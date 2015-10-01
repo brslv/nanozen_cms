@@ -13,8 +13,6 @@ class PageBinding
 	
 	public $title;
 
-	public $content;
-
 	public $active;
 
 }

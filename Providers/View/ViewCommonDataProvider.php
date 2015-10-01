@@ -130,7 +130,7 @@ class ViewCommonDataProvider
 	private function loadAllBlocks()
 	{
         $blocksObjectsArray = $this->getBlocksByActiveStatus(false);
-
+        
 		$this->commonData['allBlocks'] = $blocksObjectsArray;
 	}
     

@@ -28,11 +28,10 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 	{
 		if ( ! Validator::validatePageCreationInformation($page)) return;
 
-		$query = "INSERT INTO pages(title, content, active) VALUES(:title, :content, :active)";
+		$query = "INSERT INTO pages(title, active) VALUES(:title, :active)";
 		$stmt = $this->db()->prepare($query);
 		$stmt->execute([
 			':title' => $page->title,
-			':content' => $page->content,
             ':active' => $page->active,
 		]);
 
@@ -50,7 +49,7 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
     
     public function all($onlyActive = true) 
     {
-        $query = "SELECT id, title, content, active, deleted_on FROM pages WHERE deleted_on IS NULL ";
+        $query = "SELECT id, title, active, deleted_on FROM pages WHERE deleted_on IS NULL ";
         
         if ($onlyActive) {
             $query .= "AND " . self::ACTIVE_PAGE_FLAG;
@@ -96,7 +95,7 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
 			$query .= $key . ' = :' . $key;	
 
 			if ($counter == $paramsCount - 1) {
-				$query .= ', ';
+				$query .= ' AND ';
 			}
 		}
         

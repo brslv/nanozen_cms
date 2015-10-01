@@ -19,10 +19,13 @@ class PagesController extends BaseController
      * @var \Nanozen\Repositories\PageRepository
      */
 	private $pageRepository;
+    
+    private $blockRepository;
 
-	public function __construct()
+    public function __construct()
 	{
 	    $this->pageRepository = Injector::call('\Nanozen\Repositories\PageRepository');
+        $this->blockRepository = Injector::call('\Nanozen\Repositories\BlockRepository');
 	}
 	
 	public function create()
@@ -32,8 +35,36 @@ class PagesController extends BaseController
 		$this->view()->render('pages.create');
 	}
     
-    public function show()
+    public function show($id)
     {
+        $this->view()->escape(false);
+        
+        $page = $this->pageRepository->find(['id' => $id]);
+        
+        $regionOneBlocks = $this->blockRepository->find([
+            'page_id' => $page->getId(),
+            'region' => 1,
+        ], true, true);
+        
+        $regionTwoBlocks = $this->blockRepository->find([
+            'page_id' => $page->getId(),
+            'region' => 2,
+        ], true, true);
+        
+        $regionThreeBlocks = $this->blockRepository->find([
+            'page_id' => $page->getId(),
+            'region' => 3,
+        ], true, true);
+        
+        $data = [
+            'blocks' => [
+                'regionOne' => $regionOneBlocks,
+                'regionTwo' => $regionTwoBlocks,
+                'regionThree' => $regionThreeBlocks,
+            ],
+        ];
+        
+        $this->view()->render('pages.show', $data);
         // TODO: get a page,
         // constructed with it's blocks and display it.
     }

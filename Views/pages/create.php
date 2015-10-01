@@ -18,11 +18,7 @@
 			<div class="form-group">
 				<?= Form::text('title', ['class' => 'form-control', 'placeholder' => 'Title']); ?>
 			</div>
-
-			<div class="form-group">
-				<?= Form::textarea('content', ['class' => 'form-control', 'placeholder' => 'Content']); ?>
-			</div>
-
+        
 			<div class="form-group">
 				<?= Form::dropdown('active', [1 => 'Visible', 0 => 'Hidden'], ['class' => 'form-control', 'placeholder' => 'Status']); ?>
 			</div>
