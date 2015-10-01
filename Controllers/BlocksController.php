@@ -52,7 +52,7 @@ class BlocksController extends BaseController
     }
     
     /**
-     * @bind \Nanozen\Models\Binding\StoreContentBoxBlockBinding
+     * @bind \Nanozen\Models\Binding\BlockBinding
      */
     public function store($type)
     {
@@ -101,14 +101,14 @@ class BlocksController extends BaseController
     }
     
     /**
-     * @bind \Nanozen\Models\Binding\StoreContentBoxBlockBinding
+     * @bind \Nanozen\Models\Binding\BlockBinding
      */
     public function update($id)
     {
         Redirect::guests('/');
         
         $blockBinding = $this->binding;
-        
+     
         $result = $this->blockRepository->update($id, $this->binding);
         
         if ( ! $result) {

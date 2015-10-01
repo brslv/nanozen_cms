@@ -5,7 +5,7 @@ namespace Nanozen\Utilities;
 use Nanozen\Models\Binding\StorePageBinding;
 use Nanozen\Models\Binding\UpdatePageBinding;
 use Nanozen\Models\Binding\RegisterUserBinding;
-use Nanozen\Models\Binding\StoreContentBoxBlockBinding;
+use Nanozen\Models\Binding\BlockBinding;
 use Nanozen\Providers\Session\SessionProvider as Session;
 
 /**
@@ -63,14 +63,7 @@ class Validator
 		return $valid;
 	}
     
-    public static function validateBlockCreationInformation($block)
-    {
-        if (get_class($block) == 'Nanozen\Models\Binding\StoreContentBoxBlockBinding') {
-            return self::validateContentBoxCreationInformation($block);
-        }
-    }
-    
-    private static function validateContentBoxCreationInformation(StoreContentBoxBlockBinding $block)
+    public static function validateBlockCreationInformation(BlockBinding $block)
     {
         $valid = true;
         

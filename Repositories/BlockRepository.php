@@ -144,7 +144,7 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
         return false;
     }
     
-    public function update($id, \Nanozen\Models\Binding\StoreContentBoxBlockBinding $block)
+    public function update($id, $block)
     {
         if ( ! Validator::validateBlockCreationInformation($block)) return;
         

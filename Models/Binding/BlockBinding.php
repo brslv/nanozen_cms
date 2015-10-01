@@ -3,12 +3,12 @@
 namespace Nanozen\Models\Binding;
 
 /**
- * Class StoreBlockBinding
+ * Class BlockBinding
  *
  * @author brslv
  * @package \Nanozen\Models\Binding
  */
-class StoreContentBoxBlockBinding
+class BlockBinding
 {
     
     public $title;
