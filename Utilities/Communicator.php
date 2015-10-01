@@ -45,5 +45,9 @@ class Communicator
     const INVALID_PAGE_REGION = "Invalid page region";
     
     const BLOCK_SUCCESSFULLY_CREATED = "A block has been created successfully.";
+    
+    const BLOCK_SUCCESSFULLY_EDITED = 'Block successfully edited.';
+    
+    const BLOCK_EDITING_FAIL = 'Block editing failed. Please try again.';
 	
 }

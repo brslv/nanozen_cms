@@ -9,7 +9,7 @@ use Nanozen\Contracts\Factories\FactoryContract;
  * Class of BlockFactory
  *
  * @author brslv
- * @package Nanozen\Contracts\Factories
+ * @package Nanozen\Factories
  */
 class BlockFactory implements FactoryContract
 {

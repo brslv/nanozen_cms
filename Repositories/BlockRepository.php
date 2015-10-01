@@ -118,5 +118,32 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
 
 		return $executableArray;
 	}
+    
+    public function update($id, \Nanozen\Models\Binding\StoreContentBoxBlockBinding $block)
+    {
+        if ( ! Validator::validateBlockCreationInformation($block)) return;
+        
+        $query = "UPDATE blocks"
+                . " SET title = :title, description = :description, content = :content, page_id = :page_id, region = :region, active = :active"
+                . " WHERE id = :id";
+        $stmt = $this->db()->prepare($query);
+        $result = $stmt->execute([
+            ':title' => $block->title,
+            ':description' => $block->description,
+            ':content' => $block->content,
+            ':page_id' => $block->pageId,
+            ':region' => $block->region,
+            ':active' => $block->active,
+            ':id' => $id,
+        ]);
+        
+        if ($result) {
+            Session::flash('flash_messages', Communicator::BLOCK_SUCCESSFULLY_EDITED);
+            return true;
+        }
+        
+        Session::flash('flash_messages', Communicator::BLOCK_EDITIN_FAIL);
+        return false;
+    }
 
 }

@@ -86,6 +86,21 @@ class Block
     {
         return $this->blockTypeId;
     }
+    
+    public function getBlockType()
+    {
+        if ($this->getBlockTypeId() == 1) {
+            return self::BLOCK_TYPE_FORM;
+        }
+        
+        if ($this->getBlockTypeId() == 2) {
+            return self::BLOCK_TYPE_CONTENT_BOX;
+        }
+        
+        if ($this->getBlockTypeId() == 3) {
+            return self::BLOCK_TYPE_GRID;
+        }
+    }
 
     public function getPageId()
     {

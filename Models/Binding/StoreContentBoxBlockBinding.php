@@ -6,7 +6,7 @@ namespace Nanozen\Models\Binding;
  * Class StoreBlockBinding
  *
  * @author brslv
- * @package Nanozen\Models\Binding
+ * @package \Nanozen\Models\Binding
  */
 class StoreContentBoxBlockBinding
 {

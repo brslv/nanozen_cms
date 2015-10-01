@@ -29,3 +29,5 @@ $router->delete('pages/{id:i}/delete', 'PagesController@delete');
 // Blocks
 $router->get('blocks/{type:b}/create', 'BlocksController@create');
 $router->post('blocks/store/{type:b}', 'BlocksController@store');
+$router->get('blocks/{id:i}/edit', 'BlocksController@edit');
+$router->put('blocks/{id:i}', 'BlocksController@update');
