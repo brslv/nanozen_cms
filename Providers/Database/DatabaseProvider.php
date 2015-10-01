@@ -28,6 +28,7 @@ class DatabaseProvider implements DatabaseProviderContract
 	{
 		$dsn = DatabaseFactory::make($host, $dbName, $driver);
 		$this->handler = new \PDO($dsn, $dbUser, $dbPassword, $options);
+        $this->handler->query('SET NAMES UTF8');
 	}
 	
 	/**
