@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="/css/master.css" type="text/css" />
 	
 	<script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="http://cdn.ckeditor.com/4.5.3/standard/ckeditor.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 </head>
 <body>

@@ -31,7 +31,7 @@
             </div>
         
             <div class="form-group">
-                <?= Form::textarea('content', ['class' => 'form-control', 'placeholder' => 'Content'], $block->getContent()); ?>
+                <?= Form::textarea('content', ['class' => 'form-control', 'id' => 'ck', 'placeholder' => 'Content'], $block->getContent()); ?>
             </div>
         
             <div class="form-group">

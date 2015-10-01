@@ -6,5 +6,9 @@
 			made with <a href="http://github.com/brslv/nanozen">NanozenCMS</a>.
 		</div>
 	</footer>
+
+    <script>
+        CKEDITOR.replace( 'ck' );
+    </script>
 </body>
 </html>

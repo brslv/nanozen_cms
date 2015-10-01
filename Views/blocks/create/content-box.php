@@ -27,7 +27,7 @@
             </div>
         
             <div class="form-group">
-                <?= Form::textarea('content', ['class' => 'form-control', 'placeholder' => 'Content']); ?>
+                <?= Form::textarea('content', ['class' => 'form-control', 'id' => 'ck', 'placeholder' => 'Content']); ?>
             </div>
         
             <div class="form-group">
