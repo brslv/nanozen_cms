@@ -111,23 +111,10 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 		$user = $this->find(['username' => $username]);
 		
 		if ($user && Hash::verifyPassword($password, $user->getPassword())) {
-			$firstName = $user->getFirstName();
-			$lastName = $user->getLastName();
-			$email = $user->getEmail();
-			$roleId = $user->getRoleId();
-			$role = $user->getRole();
-			$active = $user->getActive();
-			$bannedOn = $user->getBannedOn();
+			$id = $user->getId();
 			$rememberToken = $user->getRememberToken();
 
-			Session::put('username', $username);
-			Session::put('firstName', $firstName);
-			Session::put('lastName', $lastName);
-			Session::put('email', $email);
-			Session::put('roleId', $roleId);
-			Session::put('role', $role);
-			Session::put('active', $active);
-			Session::put('bannedOn', $bannedOn);
+			Session::put('id', $id);
 			Session::put('rememberToken', $rememberToken);
 
 			Session::flash('flash_messages', Communicator::SUCCESSFULLY_LOGGED);
@@ -148,13 +135,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
 	public function logout()
 	{
 		if ($this->hasLogged()) {
-			Session::remove('username');	
-			Session::remove('firstName');
-			Session::remove('lastName');
-			Session::remove('email');
-			Session::remove('roleId');
-			Session::remove('active');
-			Session::remove('bannedOn');
+			Session::remove('id');
 			Session::remove('rememberToken');
 
 			return true;
@@ -168,9 +149,9 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
      * 
      * @return boolean [description]
      */
-    public function hasLogged()
+    public static function hasLogged()
     {
-        return Session::has('username');
+        return Session::has('id');
     }
 
 }

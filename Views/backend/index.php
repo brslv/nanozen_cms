@@ -9,8 +9,8 @@
 	<main class="app-main">
 		<div class="container">
 
-			<h1 class="welcome-message">Welcome, <strong><?= $username ?></strong>.</h1>
-			<h5 class="role-info">Your role is: <strong><?= $role ?></strong></h5>
+			<h1 class="welcome-message">Welcome, <strong><?= $user->getUsername() ?></strong>.</h1>
+			<h5 class="role-info">Your role is: <strong><?= $user->getRole(); ?></strong></h5>
 
 			<hr />
 

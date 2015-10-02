@@ -21,6 +21,7 @@ class UserFactory implements FactoryContract
 
 	public static function make($info)
 	{
+		$id = $info->id;
 		$username = $info->username;
 		$password = $info->password;
 		$email = $info->email;
@@ -31,7 +32,7 @@ class UserFactory implements FactoryContract
 		$bannedOn = null;
 		$rememberToken = isset($info->remember_token) ? $info->remember_token : null;
 
-		return new User($username, $password, $email, $roleId, $active, $firstName, $lastName, $bannedOn, $rememberToken);
+		return new User($id, $username, $password, $email, $roleId, $active, $firstName, $lastName, $bannedOn, $rememberToken);
 	}
 
 }

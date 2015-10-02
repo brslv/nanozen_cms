@@ -26,14 +26,12 @@ class BackendController extends BaseController
 	public function index()
 	{
 		Redirect::guests('/');
-		$username = Session::get('username');
-		$role = Session::get('role');
+		$user = $this->userRepository->find(['id' => Session::get('id')]);
 		$quote = quote();
 
 		$data = [
 			'quote' => $quote, 
-			'username' => $username, 
-			'role' => $role,
+			'user' => $user,
 		];
 
 		$this->view()->render('backend.index', $data);

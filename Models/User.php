@@ -10,6 +10,7 @@ namespace Nanozen\Models;
  */
 class User 
 {
+    private $id;
 
 	private $username;
 	
@@ -32,6 +33,7 @@ class User
     private $rememberToken;
 
 	public function __construct(
+        $id,
 		$username, 
 		$password, 
 		$email, 
@@ -42,6 +44,7 @@ class User
 		$bannedOn = null,
         $rememberToken = null
 	) {
+        $this->id = $id;
 		$this->username = $username;
 		$this->password = $password;
 		$this->email = $email;
@@ -114,7 +117,7 @@ class User
     }
 
     /**
-     * Gets the value of role.
+     * Gets the value of roleId.
      *
      * @return mixed
      */
@@ -151,7 +154,7 @@ class User
      */
     public function getRole()
     {
-        if (is_null($this->role)) {
+        if (is_null($this->role) || $this->role == "") {
             switch ($this->roleId) {
                 case 1:
                     $this->role = 'editor';
@@ -180,5 +183,15 @@ class User
         $this->role = $role;
 
         return $this;
+    }
+
+    /**
+     * Gets the value of id.
+     *
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

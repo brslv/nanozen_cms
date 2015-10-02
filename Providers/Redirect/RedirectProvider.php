@@ -3,6 +3,7 @@
 namespace Nanozen\Providers\Redirect;
 
 use Nanozen\App\Injector;
+use Nanozen\Repositories\UserRepository;
 use Nanozen\Contracts\Providers\Redirect\RedirectProviderContract;
 
 /**
@@ -20,19 +21,17 @@ class RedirectProvider implements RedirectProviderContract
 		exit;
 	}
 
-	public static function loggedUser($location) {
-		$userRepository = Injector::call('\Nanozen\Repositories\UserRepository');
-
-		if ($userRepository->hasLogged()) {
+	public static function loggedUser($location) 
+	{
+		if (UserRepository::hasLogged()) {
 			static::to($location);
 		}
 	}
 
 	public static function guests($location) 
 	{
-		$userRepository = Injector::call('\Nanozen\Repositories\UserRepository');
 
-		if ( ! $userRepository->hasLogged()) {
+		if ( ! UserRepository::hasLogged()) {
 			static::to($location);
 		}
 	}

@@ -24,7 +24,7 @@
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
-					<?php if (Session::has('username')) : ?>
+					<?php if (Session::has('id')) : ?>
 						<li><a href="/back">Control panel</a></li>
 						<li><a href="/logout">Logout</a></li>
 					<?php else: ?>
