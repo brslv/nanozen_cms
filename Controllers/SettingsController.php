@@ -15,7 +15,14 @@ use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
  */
 class SettingsController extends BaseController
 {
+
+	private $settingsRepository;
 	
+	public function __construct()
+	{
+	    $this->settingsRepository = Injector::call('\Nanozen\Repositories\SettingRepository');
+	}
+
 	public function general()
 	{
 		AllowAccess::to('admin', '/');
@@ -30,9 +37,7 @@ class SettingsController extends BaseController
 	{
 		AllowAccess::to('admin', '/');
 
-		$settingsRepository = Injector::call('\Nanozen\Repositories\SettingRepository');
-
-		$settingsRepository->update($this->binding);
+		$this->settingsRepository->update($this->binding);
 	
 		Redirect::to('/settings/general');
 	}
@@ -46,11 +51,15 @@ class SettingsController extends BaseController
 
 	public function postBackgroundImage()
 	{
-		
+		$this->settingsRepository->changeBackgroundImage($_FILES);
+
+		Redirect::to('/settings/background');
 	}
 
 	public function postBackgroundColor()
 	{
-		
+		$this->settingsRepository->changeBackgroundColor($_POST);
+
+		Redirect::to('/settings/background');
 	}
 }

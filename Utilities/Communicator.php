@@ -61,5 +61,15 @@ class Communicator
     const SETTINGS_UPDATE_APP_DESCRIPTION_FAIL = "Site description must be in the range [3...40] symbols.";
     
     const SETTINGS_SUCCESSFULLY_EDITED = 'Settings successfully edited.';
+
+    const INVALID_COLOR = 'This color seems to be invalid';
+
+    const IMAGE_EXTENSION_NOT_SUPPORTED = 'We have detected unsupported image extension.';
+
+    const IMAGE_SIZE_NOT_SUPPORTED = 'The maximum allowed image size is 2MB';
+
+    const IMAGE_UPLOAD_SUCCESSFULL = 'Successfully uploaded image.';
+
+    const IMAGE_UPLOAD_FAIL = 'Image uploading failed. Please try again.';
 	
 }

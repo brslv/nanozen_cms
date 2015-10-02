@@ -16,13 +16,17 @@
 
 			<?php include_once app_flash() ?>
 
+			<?php $token = Form::csrfToken(); ?>
+
 			<div class="col-md-6" style="margin-bottom: 30px;">
-				<?= Form::start('/settings/background/image', 'POST', ['enctype' => 'multipart/form-data']) ?>
+				<?= Form::start('/settings/background/image', 'POST', ['enctype' => 'multipart/form-data'], false) ?>
+					<?= Form::hidden('_token', $token); ?>
+
 					<div class="panel panel-default">
 						<div class="panel-heading">Choose background image: </div>
 
 						<div class="panel-body">
-							<?= Form::input('file', null, ['class' => 'form-control', 'type' => 'file']); ?>
+							<?= Form::input('file', ['name' => 'app_background_image', 'class' => 'form-control']); ?>
 						</div>
 					</div>
 
@@ -31,16 +35,18 @@
 			</div>
 
 			<div class="col-md-6">
-				<?= Form::start('/settings/background/color'); ?>
+				<?= Form::start('/settings/background/color', 'POST', ['enctype' => 'multipart/form-data'], false); ?>
+					<?= Form::hidden('_token', $token); ?>
+
 					<div class="panel panel-default">
 						<div class="panel-heading">Choose background color: </div>
 
 						<div class="panel-body">
-							<?= Form::text('app_description', ['class' => 'form-control', 'value' => $app_background_color]); ?>
+							<?= Form::text('app_background_color', ['class' => 'form-control', 'value' => $app_background_color], $app_background_color); ?>
 						</div>
 					</div>
 
-					<?= Form::submit('imageBackground', 'Save', ['class' => 'btn btn-success']); ?>
+					<?= Form::submit('colorBackground', 'Save', ['class' => 'btn btn-success']); ?>
 				<?= Form::stop(); ?>
 			</div>
 

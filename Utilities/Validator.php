@@ -20,6 +20,8 @@ class Validator
 
 	const PASSWORD_LENGTH = 6;
 
+	private static $allowedImageExtensions = ['jpg', 'jpeg'];
+
 	public static function validatePageCreationInformation(PageBinding $page)
 	{
 		$valid = true;
@@ -103,6 +105,54 @@ class Validator
     	return $valid;
     }
 
+    public static function validateBackgroundColorUpdateInformation($info)
+    {
+    	$valid = true;
+
+    	if ( ! self::stringLength($info['app_background_color'], 4, 7))	{
+    		Session::flash('flash_messages', Communicator::INVALID_COLOR);
+    		$valid = false;
+    	}
+
+    	return $valid;
+    }
+
+    public static function validateBackgroundImageUpdateInformation($info)
+    {
+    	return self::image($info);
+    }
+
+    public static function image($info) 
+    {
+    	$valid = true;
+
+    	$_info = $info['app_background_image'];
+
+    	$fileName = $_info['name'];
+    	$fileNameParts = explode('.', $fileName);
+    	$fileExtension = end($fileNameParts);
+    	$tmpName = $_info['tmp_name'];
+    	$error = $_info['error'];
+    	$size = $_info['size'];
+
+    	if ( ! in_array($fileExtension, self::$allowedImageExtensions)) {
+    		Session::flash('flash_messages', Communicator::IMAGE_EXTENSION_NOT_SUPPORTED);
+    		$valid = false;
+    	}
+
+    	if ( ! self::max($size, 2097152)) {
+    		Session::flash('flash_messages', Communicator::IMAGE_SIZE_NOT_SUPPORTED);
+    		$valid = false;
+    	}
+
+    	if ($error) {
+    		Session::flash('flash_messages', $error);
+    		$valid = false;
+    	}
+
+    	return $valid;
+    }
+
     public static function password($password)
 	{
 		if (empty($password) || $password == '') {
@@ -133,5 +183,10 @@ class Validator
     public static function min($number, $min) 
     {
         return $number >= $min;
+    }
+
+    public static function max($number, $max) 
+    {
+        return $number <= $max;
     }
 }

@@ -16,9 +16,69 @@ use Nanozen\Utilities\Communicator;
 class SettingRepository extends BaseRepository
 {
 
-	public function changeBackground()
+	public function changeBackgroundImage($info) 
 	{
-		
+		$uploadedFile = $this->uploadImage($info);
+
+		if ($uploadedFile) {
+			$query = "UPDATE options SET value = :value WHERE name = 'app_background_image'";
+			$stmt = $this->db()->prepare($query);	
+			$result = $stmt->execute([
+				':value' => $uploadedFile,
+			]);
+
+			if ($result) {
+				Session::flash('flash_messages', Communicator::IMAGE_UPLOAD_SUCCESSFULL);
+				return $result;
+			}
+		}
+
+		Session::flash('flash_messages', Communicator::IMAGE_UPLOAD_FAIL);
+		return false;
+	}
+
+	private function uploadImage($info) 
+	{
+		if ( ! Validator::validateBackgroundImageUpdateInformation($info)) {
+			return false;
+		}
+
+		$_info = $info['app_background_image'];
+
+    	$fileName = $_info['name'];
+    	$fileNameParts = explode('.', $fileName);
+    	$fileExtension = end($fileNameParts);
+    	$cleanFileName = str_replace('.' . $fileExtension, '', $fileName);
+    	$tmpName = $_info['tmp_name'];
+    	$error = $_info['error'];
+    	$size = $_info['size'];
+    	$finalName = $cleanFileName . '___' . md5(time()) . '.' . $fileExtension;
+    	$uploadDestination = './uploads/' . $finalName;
+
+    	if (move_uploaded_file($tmpName, $uploadDestination)) {
+    		return $finalName;
+    	}
+
+    	return false;
+	}
+
+	public function changeBackgroundColor($info)
+	{
+		if ( ! Validator::validateBackgroundColorUpdateInformation($info)) {
+			return false;
+		}
+
+		$query = "UPDATE options SET value = :value WHERE name = 'app_background_color'";
+		$stmt = $this->db()->prepare($query);	
+		$result = $stmt->execute([
+			':value' => $info['app_background_color'],
+		]);
+
+		if ($result === true) {
+			Session::flash('flash_messages', Communicator::SETTINGS_SUCCESSFULLY_EDITED);
+		}
+
+		return $result;
 	}
 	
 	public function update($info) 

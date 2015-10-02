@@ -50,7 +50,7 @@ class Form
 
 	public static function input($name, array $attributes = null)
 	{
-		return InputBuilder::build($name, null, $attributes);
+		return InputBuilder::build($name, null, null, $attributes);
 	}
 
 	public static function submit($name, $value, array $attributes = null)

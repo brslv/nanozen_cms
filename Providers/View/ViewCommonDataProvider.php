@@ -106,7 +106,7 @@ class ViewCommonDataProvider
 		} 
 
 		if (isset($backgroundImage) && trim($backgroundImage) != "") {
-			$this->commonData['backgroundStyle'] .= "background-image: url('{$backgroundImage}'); background-repeat: none; background-size: cover;";
+			$this->commonData['backgroundStyle'] .= "background-image: url('uploads/{$backgroundImage}'); background-repeat: none; background-size: cover;";
 		}
 	}
 
