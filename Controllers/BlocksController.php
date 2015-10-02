@@ -5,6 +5,7 @@ namespace Nanozen\Controllers;
 use Nanozen\Models\Block;
 use Nanozen\App\Injector;
 use Nanozen\Providers\Redirect\RedirectProvider as Redirect;
+use Nanozen\Providers\AllowAccess\AllowAccessProvider as AllowAccess;
 use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
 
 /**
@@ -31,7 +32,7 @@ class BlocksController extends BaseController
     
     public function create($type)
     {   
-        Redirect::guests('/');
+        AllowAccess::to(['admin', 'editor'], '/back');
         
         switch ($type) {
             case Block::BLOCK_TYPE_FORM:
@@ -56,7 +57,7 @@ class BlocksController extends BaseController
      */
     public function store($type)
     {
-        Redirect::guests('/');
+        AllowAccess::to(['admin', 'editor'], '/');
         
         $blockBinding = $this->binding;
         
@@ -71,7 +72,7 @@ class BlocksController extends BaseController
     
     public function edit($id)
     {
-        Redirect::guests('/');
+        AllowAccess::to(['admin', 'editor'], '/');
 
         $block = $this->blockRepository->find(['id' => $id], false);
         
@@ -105,7 +106,7 @@ class BlocksController extends BaseController
      */
     public function update($id)
     {
-        Redirect::guests('/');
+        AllowAccess::to(['admin', 'editor'], '/');
         
         $blockBinding = $this->binding;
      
@@ -120,7 +121,7 @@ class BlocksController extends BaseController
     
     public function delete($id) 
     {
-        Redirect::guests('/');
+        AllowAccess::to(['admin', 'editor'], '/');
         
         $result = $this->blockRepository->remove($id);
         

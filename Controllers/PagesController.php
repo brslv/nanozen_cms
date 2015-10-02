@@ -5,6 +5,7 @@ namespace Nanozen\Controllers;
 use Nanozen\App\Injector;
 use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Providers\Redirect\RedirectProvider as Redirect;
+use Nanozen\Providers\AllowAccess\AllowAccessProvider as AllowAccess;
 use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
 
 /**
@@ -31,7 +32,7 @@ class PagesController extends BaseController
 	
 	public function create()
 	{
-		Redirect::guests('/');
+        AllowAccess::to(['admin', 'editor'], '/');
 
 		$this->view()->render('pages.create');
 	}
@@ -82,7 +83,7 @@ class PagesController extends BaseController
 	 */
 	public function store()
 	{
-		Redirect::guests('/');
+		AllowAccess::to(['admin', 'editor'], '/');
 
 		$bindedPage = $this->binding;
 		$persistedPage = $this->pageRepository->save($bindedPage);
@@ -96,7 +97,7 @@ class PagesController extends BaseController
 
 	public function edit($id)
 	{
-		Redirect::guests('/');
+		AllowAccess::to(['admin', 'editor'], '/');
 
         $page = $this->pageRepository->find(['id' => $id], false);
         
@@ -115,7 +116,7 @@ class PagesController extends BaseController
      */
     public function update($id) 
     {
-        Redirect::guests('/');
+        AllowAccess::to(['admin', 'editor'], '/');
         
         $result = $this->pageRepository->update($id, $this->binding);
         
@@ -128,7 +129,7 @@ class PagesController extends BaseController
     
     public function delete($id) 
     {
-        Redirect::guests('/');
+        AllowAccess::to(['admin', 'editor'], '/');
         
         $result = $this->pageRepository->remove($id);
         
@@ -141,14 +142,14 @@ class PagesController extends BaseController
     
     public function setupHomepage()
     {
-        Redirect::guests('/');
+        AllowAccess::to(['admin', 'editor'], '/');
         
         $this->view()->render('pages.setupHomepage');
     }
     
     public function postSetupHomepage()
     {
-        Redirect::guests('/');
+        AllowAccess::to(['admin', 'editor'], '/');
         
         if (isset($_POST['homepageId'])) {
             $homepageId = $_POST['homepageId'];

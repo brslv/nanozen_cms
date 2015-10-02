@@ -55,7 +55,7 @@ class AuthController extends BaseController
 
 	public function login()
 	{
-		Redirect::loggedUser('/back');
+		RestrictAccess::_for(RestrictAccess::LOGGED, '/back');
 
 		$this->view()->render('auth.login');
 	}
@@ -66,6 +66,7 @@ class AuthController extends BaseController
 	public function postLogin()
 	{
 		$bindedUser = $this->binding;
+
 		if ($this->userRepository->login($bindedUser)) {
 			Redirect::loggedUser('/back');
 		} else {
@@ -75,6 +76,8 @@ class AuthController extends BaseController
 
 	public function logout()
 	{
+		RestrictAccess::_for('guests', '/');
+
 		if ($this->userRepository->logout()) {
 			Redirect::guests('/');
 		}
