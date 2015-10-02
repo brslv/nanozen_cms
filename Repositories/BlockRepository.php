@@ -31,7 +31,11 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
         }
         
         $blocks = $this->db()->query($query)->fetch();
-        
+
+        usort($blocks, function ($a, $b) {
+            return $a->page_title > $b->page_title;
+        });
+
         return $blocks;
     }
     
@@ -91,6 +95,10 @@ class BlockRepository extends BaseRepository implements BlockRepositoryContract
             foreach ($block as $b) {
                 $blocks[] = BlockFactory::make($b);
             }
+
+            usort($blocks, function ($a, $b) {
+                return strcasecmp($a->getPageTitle(), $b->getPageTitle());  
+            });
 
             return $blocks;
         }

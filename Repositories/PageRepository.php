@@ -56,6 +56,10 @@ class PageRepository extends BaseRepository implements PageRepositoryContract
         }
         
         $pages = $this->db()->query($query)->fetch();
+
+        usort($pages, function ($a, $b) {
+            return $a->title > $b->title;
+        });
         
         return $pages;
     }

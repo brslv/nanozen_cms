@@ -49,10 +49,6 @@
                     
                     <?php if (count($allBlocks) > 0) : ?>
                     	<?php  
-	                    	usort($allBlocks, function ($a, $b) {
-				    	        return strcasecmp($a->getPageTitle(), $b->getPageTitle());  
-					        });
-
                     		$previousPageTitle = $allBlocks[0]->getPageTitle();
 							$itterations = 0;
                     	?>
