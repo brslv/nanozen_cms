@@ -3,6 +3,7 @@
 namespace Nanozen\Controllers;
 
 use Nanozen\App\Injector;
+use Nanozen\Models\UserRoles;
 use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Providers\Redirect\RedirectProvider as Redirect;
 use Nanozen\Providers\AllowAccess\AllowAccessProvider as AllowAccess;
@@ -31,13 +32,22 @@ class BackendController extends BaseController
 
 		$user = $this->userRepository->find(['id' => Session::get('id')]);
 		$quote = quote();
+		$view = 'backend.index';
+
+		if ($user->getRole() == UserRoles::USER) {
+			$view = 'backend.index_slim';
+		}
+
+		if ($user->getRole() == UserRoles::EDITOR) {
+			$view = 'backend.index_editor';
+		}
 
 		$data = [
 			'quote' => $quote, 
 			'user' => $user,
 		];
 
-		$this->view()->render('backend.index', $data);
+		$this->view()->render($view, $data);
 	}
 	
 }

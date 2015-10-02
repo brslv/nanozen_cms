@@ -4,6 +4,7 @@ namespace Nanozen\Controllers;
 
 use Nanozen\Models\Block;
 use Nanozen\App\Injector;
+use Nanozen\Models\UserRoles;
 use Nanozen\Providers\Redirect\RedirectProvider as Redirect;
 use Nanozen\Providers\AllowAccess\AllowAccessProvider as AllowAccess;
 use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
@@ -32,7 +33,7 @@ class BlocksController extends BaseController
     
     public function create($type)
     {   
-        AllowAccess::to(['admin', 'editor'], '/back');
+        AllowAccess::to([UserRoles::ADMIN, UserRoles::EDITOR], '/back');
         
         switch ($type) {
             case Block::BLOCK_TYPE_FORM:
@@ -57,7 +58,7 @@ class BlocksController extends BaseController
      */
     public function store($type)
     {
-        AllowAccess::to(['admin', 'editor'], '/');
+        AllowAccess::to([UserRoles::ADMIN, UserRoles::EDITOR], '/');
         
         $blockBinding = $this->binding;
         
@@ -72,7 +73,7 @@ class BlocksController extends BaseController
     
     public function edit($id)
     {
-        AllowAccess::to(['admin', 'editor'], '/');
+        AllowAccess::to([UserRoles::ADMIN, UserRoles::EDITOR], '/');
 
         $block = $this->blockRepository->find(['id' => $id], false);
         
@@ -106,7 +107,7 @@ class BlocksController extends BaseController
      */
     public function update($id)
     {
-        AllowAccess::to(['admin', 'editor'], '/');
+        AllowAccess::to([UserRoles::ADMIN, UserRoles::EDITOR], '/');
         
         $blockBinding = $this->binding;
      
@@ -121,7 +122,7 @@ class BlocksController extends BaseController
     
     public function delete($id) 
     {
-        AllowAccess::to(['admin', 'editor'], '/');
+        AllowAccess::to([UserRoles::ADMIN, UserRoles::EDITOR], '/');
         
         $result = $this->blockRepository->remove($id);
         

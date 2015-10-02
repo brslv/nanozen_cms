@@ -76,7 +76,7 @@ class AuthController extends BaseController
 
 	public function logout()
 	{
-		RestrictAccess::_for('guests', '/');
+		RestrictAccess::_for(RestrictAccess::GUESTS, '/');
 
 		if ($this->userRepository->logout()) {
 			Redirect::guests('/');

@@ -11,10 +11,10 @@ namespace Nanozen\Models;
 class UserRoles 
 {
 	
-	const USER_ROLE_ADMIN = 'admin';
+	const ADMIN = 'admin';
 
-	const USER_ROLE_USER = 'user';
+	const USER = 'user';
 
-	const USER_ROLE_EDITOR = 'editor';
+	const EDITOR = 'editor';
 
 }
