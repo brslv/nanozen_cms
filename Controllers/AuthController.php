@@ -2,10 +2,12 @@
 
 namespace Nanozen\Controllers;
 
-use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
 use Nanozen\App\Injector;
 use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\Providers\Redirect\RedirectProvider as Redirect;
+use Nanozen\Providers\AllowAccess\AllowAccessProvider as AllowAccess;
+use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
+use Nanozen\Providers\RestrictAccess\RestrictAccessProvider as RestrictAccess;
 
 /**
  * Class AuthController
@@ -30,7 +32,7 @@ class AuthController extends BaseController
 	 */
 	public function register()
 	{
-		Redirect::loggedUser('/back');
+		RestrictAccess::_for(RestrictAccess::LOGGED, '/back');
 
 		$this->view()->render('auth.register');
 	}

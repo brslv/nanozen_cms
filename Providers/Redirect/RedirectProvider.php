@@ -23,15 +23,18 @@ class RedirectProvider implements RedirectProviderContract
 
 	public static function loggedUser($location) 
 	{
-		if (UserRepository::hasLogged()) {
+		$userRepository = Injector::call('\Nanozen\Repositories\UserRepository');
+
+		if ($userRepository->hasLogged()) {
 			static::to($location);
 		}
 	}
 
 	public static function guests($location) 
 	{
+		$userRepository = Injector::call('\Nanozen\Repositories\UserRepository');
 
-		if ( ! UserRepository::hasLogged()) {
+		if ( ! $userRepository->hasLogged()) {
 			static::to($location);
 		}
 	}

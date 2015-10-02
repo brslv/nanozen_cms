@@ -2,10 +2,12 @@
 
 namespace Nanozen\Controllers;
 
-use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
-use Nanozen\Providers\Redirect\RedirectProvider as Redirect;
-use Nanozen\Providers\Session\SessionProvider as Session;
 use Nanozen\App\Injector;
+use Nanozen\Providers\Session\SessionProvider as Session;
+use Nanozen\Providers\Redirect\RedirectProvider as Redirect;
+use Nanozen\Providers\AllowAccess\AllowAccessProvider as AllowAccess;
+use Nanozen\Providers\Controller\BaseControllerProvider as BaseController;
+use Nanozen\Providers\RestrictAccess\RestrictAccessProvider as RestrictAccess;
 
 /**
  * Class BackendController
@@ -25,7 +27,8 @@ class BackendController extends BaseController
 
 	public function index()
 	{
-		Redirect::guests('/');
+		RestrictAccess::_for(RestrictAccess::GUESTS, '/');
+
 		$user = $this->userRepository->find(['id' => Session::get('id')]);
 		$quote = quote();
 
