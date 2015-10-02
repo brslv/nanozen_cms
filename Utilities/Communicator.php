@@ -55,5 +55,11 @@ class Communicator
     const BLOCK_DOES_NOT_EXIST = 'Block does not exist.';
     
     const SET_HOMEPAGE_FAIL = 'An error occured while trying to change your homepage. Please, try again.';
+
+    const SETTINGS_UPDATE_APP_TITLE_FAIL = "Site title must be in the range [2...30] symbols.";
+
+    const SETTINGS_UPDATE_APP_DESCRIPTION_FAIL = "Site description must be in the range [3...40] symbols.";
+    
+    const SETTINGS_SUCCESSFULLY_EDITED = 'Settings successfully edited.';
 	
 }

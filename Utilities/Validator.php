@@ -86,6 +86,23 @@ class Validator
         return $valid;
     }
 
+    public static function validateSettingsUpdateInformation($info)
+    {
+    	$valid = true;
+
+    	if ( ! self::stringLength($info->app_title, 2, 30)) {
+    		Session::flash('flash_messages', Communicator::SETTINGS_UPDATE_APP_TITLE_FAIL);
+    		$valid = false;
+    	}
+
+    	if ( ! self::stringLength($info->app_description, 2, 50)) {
+    		Session::flash('flash_messages', Communicator::SETTINGS_UPDATE_APP_DESCRIPTION_FAIL);
+    		$valid = false;
+    	}
+
+    	return $valid;
+    }
+
     public static function password($password)
 	{
 		if (empty($password) || $password == '') {

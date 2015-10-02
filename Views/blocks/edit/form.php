@@ -3,7 +3,7 @@
 ?>
 <?php include app_header(); ?>
 <?php include app_navigation(); ?>
-<?php include app_back_navigation(); ?>
+<?php include app_back_navigation_resolver(); ?>
 
 <main class="app-main">
 	<div class="container">

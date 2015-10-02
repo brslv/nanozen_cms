@@ -5,6 +5,7 @@ namespace Nanozen\Providers\View;
 use Nanozen\App\Injector;
 use Nanozen\Factories\PageFactory;
 use Nanozen\Factories\BlockFactory;
+use Nanozen\Providers\Session\SessionProvider as Session;
 
 /**
  * Class ViewCommonDataProvider
@@ -23,8 +24,9 @@ class ViewCommonDataProvider
 	{
 		// Invoke your methods bellow:
 		// e.g: $this->users();
-		$this->loadAppTitle();
-		$this->loadAppDescription();
+		$this->loadAllSettings();
+		$this->loadBackgroundStyle();
+		$this->loadUserInformation();
 		$this->loadAllPages();
         $this->loadAllActivePages();
         $this->loadAllBlocks();
@@ -73,22 +75,39 @@ class ViewCommonDataProvider
 	 *	}
 	 */
 	
-	private function loadAppTitle()
+	private function loadAllSettings()
 	{
-		$stmt= $this->db()->prepare("SELECT value FROM options WHERE name = :name LIMIT 1");
-		$stmt->execute([':name' => 'app_title']);
-		$appTitle = $stmt->fetch(null, false)->value;
+		$settings = $this->db()->query('SELECT id, name, value FROM options')->fetch();
 
-		$this->commonData['appTitle'] = $appTitle;
+		foreach ($settings as $setting) {
+			$this->commonData[$setting->name] = $setting->value;
+		}
 	}
 
-	private function loadAppDescription()
+	private function loadUserInformation()
 	{
-		$stmt = $this->db()->prepare("SELECT value FROM options WHERE name = :name");
-		$stmt->execute([':name' => 'app_description']);
-		$appDescription = $stmt->fetch(null, false)->value;
+        $userRepository = Injector::call('\Nanozen\Repositories\UserRepository');
 
-		$this->commonData['appDescription'] = $appDescription;
+        if ($userRepository->hasLogged()) {
+			$user = $userRepository->find(['id' => Session::get('id')]);
+        	$this->commonData['user'] = $user;
+        }
+	}
+
+	private function loadBackgroundStyle()
+	{
+		$backgroundColor = $this->commonData['app_background_color'];
+		$backgroundImage = $this->commonData['app_background_image'];
+
+		$this->commonData['backgroundStyle'] = "";
+
+		if (isset($backgroundColor) && trim($backgroundColor) != "") {
+			$this->commonData['backgroundStyle'] .= 'background-color: ' . $backgroundColor . '; ';	
+		} 
+
+		if (isset($backgroundImage) && trim($backgroundImage) != "") {
+			$this->commonData['backgroundStyle'] .= "background-image: url('{$backgroundImage}'); background-repeat: none; background-size: cover;";
+		}
 	}
 
     /**

@@ -36,6 +36,9 @@ $router->get('blocks/{id:i}/edit', 'BlocksController@edit');
 $router->put('blocks/{id:i}', 'BlocksController@update');
 $router->delete('blocks/{id:i}/delete', 'BlocksController@delete');
 
-// ========
 // Settings
-// ========
+$router->get('settings/general', 'SettingsController@general');
+$router->post('settings/general', 'SettingsController@postGeneral');
+$router->get('settings/background', 'SettingsController@background');
+$router->post('settings/background/image', 'SettingsController@postBackgroundImage');
+$router->post('settings/background/color', 'SettingsController@postBackgroundColor');

@@ -46,6 +46,13 @@ if ( ! function_exists('app_back_navigation_editor')) {
 	}
 }
 
+if ( ! function_exists('app_back_navigation_resolver')) {
+
+	function app_back_navigation_resolver() {
+		return VIEWS_INCLUDE_FOLDER . 'back_navigation_resolver.php';
+	}
+}
+
 if ( ! function_exists('app_flash')) {
 
 	/**

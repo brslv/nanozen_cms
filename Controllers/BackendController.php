@@ -30,24 +30,14 @@ class BackendController extends BaseController
 	{
 		RestrictAccess::_for(RestrictAccess::GUESTS, '/');
 
-		$user = $this->userRepository->find(['id' => Session::get('id')]);
 		$quote = quote();
 		$view = 'backend.index';
 
-		if ($user->getRole() == UserRoles::USER) {
-			$view = 'backend.index_slim';
-		}
-
-		if ($user->getRole() == UserRoles::EDITOR) {
-			$view = 'backend.index_editor';
-		}
-
 		$data = [
 			'quote' => $quote, 
-			'user' => $user,
 		];
 
-		$this->view()->render($view, $data);
+		$this->view()->render('backend.index', $data);
 	}
 	
 }

@@ -3,7 +3,7 @@
 ?>
 <?php include app_header(); ?>
 <?php include app_navigation(); ?>
-<?php include app_back_navigation(); ?>
+<?php include app_back_navigation_resolver(); ?>
 
 <main class="app-main">
 	<div class="container">
@@ -35,7 +35,7 @@
             </div>
         
             <div class="form-group">
-                <lable class="form-control-static" for="pageId">Attach to page: </lable>
+                <label for="pageId">Attach to page: </label>
             </div>
         
             <div class="form-group">
@@ -53,7 +53,7 @@
             </div>
         
             <div class="form-group">
-                <lable class="form-control-static" for="region">Region: </lable>
+                <label for="region">Region: </label>
             </div>
         
             <div class="form-group">
@@ -71,7 +71,7 @@
             </div>
         
             <div class="form-group">
-                <lable class="form-control-static" for="region">Block status: </lable>
+                <label for="region">Block status: </label>
             </div>
         
             <div class="form-group">

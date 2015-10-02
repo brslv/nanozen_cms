@@ -99,9 +99,8 @@
 					Settings <span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="">Site title</a></li>
-					<li><a href="">Site description</a></li>
-					<li><a href="">Change background</a></li>
+					<li><a href="/settings/general">General settings</a></li>
+					<li><a href="/settings/background">Change background</a></li>
 				</ul>
 			</li>
 
