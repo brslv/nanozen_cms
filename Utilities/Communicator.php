@@ -71,5 +71,9 @@ class Communicator
     const IMAGE_UPLOAD_SUCCESSFULL = 'Successfully uploaded image.';
 
     const IMAGE_UPLOAD_FAIL = 'Image uploading failed. Please try again.';
+
+    const BACKGROUND_IMAGE_REMOVED_SUCCESSFULLY = "Background image removed successfully.";
+
+    const BACKGROUND_IMAGE_REMOVE_FAIL = "Removing background failed. Please try again.";
 	
 }

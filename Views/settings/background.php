@@ -32,6 +32,14 @@
 
 					<?= Form::submit('imageBackground', 'Upload and save', ['class' => 'btn btn-success']); ?>
 				<?= Form::stop(); ?>
+
+				<hr />
+
+				<?= Form::start('/settings/background/image/remove', 'POST', ['enctype' => 'multipart/form-data'], false) ?>
+					<?= Form::hidden('_token', $token); ?>
+
+					<?= Form::submit('imageBackgroundRemove', 'Remove image background', ['class' => 'btn btn-danger']); ?>
+				<?= Form::stop(); ?>
 			</div>
 
 			<div class="col-md-6">
@@ -48,6 +56,7 @@
 
 					<?= Form::submit('colorBackground', 'Save', ['class' => 'btn btn-success']); ?>
 				<?= Form::stop(); ?>
+
 			</div>
 
 		</div>

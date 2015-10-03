@@ -16,6 +16,20 @@ use Nanozen\Utilities\Communicator;
 class SettingRepository extends BaseRepository
 {
 
+	public function removeBackgroundImage($info)
+	{
+		$query = "UPDATE options SET value = '' WHERE name = 'app_background_image'";
+		$result = $this->db()->query($query);
+
+		if ($result) {
+			Session::flash('flash_messages', Communicator::BACKGROUND_IMAGE_REMOVED_SUCCESSFULLY);
+			return true;
+		} else {
+			Session::flash('flash_messages', Communicator::BACKGROUND_IMAGE_REMOVE_FAIL);
+			return false;
+		}
+	}
+
 	public function changeBackgroundImage($info) 
 	{
 		$uploadedFile = $this->uploadImage($info);

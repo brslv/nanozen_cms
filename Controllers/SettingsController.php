@@ -62,4 +62,11 @@ class SettingsController extends BaseController
 
 		Redirect::to('/settings/background');
 	}
+
+	public function postBackgroundImageRemove()
+	{
+		$this->settingsRepository->removeBackgroundImage($_POST);
+
+		Redirect::to('/settings/background');
+	}
 }

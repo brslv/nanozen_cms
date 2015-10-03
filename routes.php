@@ -42,3 +42,4 @@ $router->post('settings/general', 'SettingsController@postGeneral');
 $router->get('settings/background', 'SettingsController@background');
 $router->post('settings/background/image', 'SettingsController@postBackgroundImage');
 $router->post('settings/background/color', 'SettingsController@postBackgroundColor');
+$router->post('settings/background/image/remove', 'SettingsController@postBackgroundImageRemove');
